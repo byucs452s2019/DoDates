@@ -10,13 +10,15 @@ So far, no students have worked on it, since it is still just an idea. A develop
 
 If time, or in the future, we will have an option to link this app to a student's school website to pull classes and assignments directly into the app (e.g. connecting to Canvas, LearningSuite, etc.) so students won't have to enter each assignment by hand.
 
+Since the target audience is college students and college students are almost always struggling financially, there will be no attempt to monetize DoDates.
+
 ## Legal
 Manifold includes a privacy policy, but has no end-user license agreement (EULA) nor service level agreement (SLA).
 
 ## Technical
 Manifold code will be available in a [private repository](https://github.com/byucs452s2019/DoDates).
 
-The technology that will be used is yet to be decided and is negotiable.
+The technology that will be used is yet to be decided and is negotiable, but the NoSQL database we are leaning towards is some type of document database.
 
 ## How to join DoDates development
 To work on the DoDates development team, contact [Nicole T. Gottfredson](mailto:nicole.theurer@outlook.com) with an expression of your interest.
