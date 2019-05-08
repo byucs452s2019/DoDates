@@ -1,5 +1,5 @@
 # DoDates
-## A simple app to help students schedule when to actually do homework assignments
+## A simple app to help students schedule when to do homework assignments
 ### App
 Students will be able to view a calendar with when their assignments are due (the due dates) *and* when they plan to do them (the do dates). There will be a filter option so they can just view the due dates or just view the do dates. Functionality will include the ability to add classes, add assignments with their due dates, and set do dates of when the student will actually do the assignment.
 
