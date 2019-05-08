@@ -6,7 +6,7 @@ Students will be able to view a calendar with when their assignments are due (th
 ## Business
 We call our customers "students" since the majority of them are students in classes (although it is possible for a customer to be someone else using the app as a to-do list).
 
-So far, no students have worked on it, since it is still just an idea. A development team as small as 3 people would suffice.
+So far, no students have worked on it, since it is still just an idea. A development team of 3-4 people would suffice.
 
 If time, or in the future, we will have an option to link this app to a student's school website to pull classes and assignments directly into the app (e.g. connecting to Canvas, LearningSuite, etc.) so students won't have to enter each assignment by hand.
 
