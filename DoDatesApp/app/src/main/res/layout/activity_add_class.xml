@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ntheurer.homeworkscheduler.ui.AddClassActivity"
+    android:paddingBottom="50dp"
+    android:paddingTop="50dp">
+
+    <TextView
+        android:id="@+id/name_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/class_name"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:padding="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+
+    <EditText
+        android:id="@+id/name_edit"
+        android:inputType="text"
+        android:hint="@string/class_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/name_category"
+        android:layout_toEndOf="@id/name_category"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp" />
+
+
+    <TextView
+        android:id="@+id/color_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_color"
+        android:layout_below="@id/name_category"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:padding="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/color_dropdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/color_category"
+        android:layout_toEndOf="@id/color_category"
+        android:layout_below="@id/name_edit"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:padding="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp">
+
+    </android.support.v7.widget.AppCompatSpinner>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create"
+            android:id="@+id/createClassButton"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:id="@+id/cancelButton"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/createClassButton"
+            android:layout_toEndOf="@id/createClassButton"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
