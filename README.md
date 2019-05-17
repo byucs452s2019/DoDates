@@ -13,10 +13,10 @@ If time, or in the future, we will have an option to link this app to a student'
 Since the target audience is college students and college students are almost always struggling financially, there will be no attempt to monetize DoDates.
 
 ## Legal
-Manifold includes a privacy policy, but has no end-user license agreement (EULA) nor service level agreement (SLA).
+DoDates will include a privacy policy, but has no end-user license agreement (EULA) nor service level agreement (SLA).
 
 ## Technical
-Manifold code will be available in a [private repository](https://github.com/byucs452s2019/DoDates).
+DoDates code will be available in a [github repository](https://github.com/byucs452s2019/DoDates).
 
 The technology that will be used is yet to be decided and is negotiable, but the NoSQL database we are leaning towards is some type of document database.
 
