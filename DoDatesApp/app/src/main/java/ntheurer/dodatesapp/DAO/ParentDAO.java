@@ -81,10 +81,10 @@ public class ParentDAO {
         try{
             //drops all database tables
             stmt = connection.createStatement();
-            stmt.executeUpdate("DROP TABLE IF EXISTS Event");
-            stmt.executeUpdate("DROP TABLE IF EXISTS User");
-            stmt.executeUpdate("DROP TABLE IF EXISTS Person");
-            stmt.executeUpdate("DROP TABLE IF EXISTS AuthToken");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Students");
+            stmt.executeUpdate("DROP TABLE IF EXISTS StudentClasses");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Classes");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Assignments");
 
         }catch(Exception e){
             e.printStackTrace();
@@ -110,6 +110,8 @@ public class ParentDAO {
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS `StudentClasses` (\n" +
                     "\t`UserID`\tTEXT NOT NULL UNIQUE,\n" +
                     "\t`ClassID`\tTEXT NOT NULL UNIQUE,\n" +
+                    "\tFOREIGN KEY (`UserID`) REFERENCES `Students`" +
+                    "\tFOREIGN KEY (`ClassID`) REFERENCES `Classes`" +
                     ")");
         }catch(Exception e){
             e.printStackTrace();
@@ -136,6 +138,7 @@ public class ParentDAO {
                     "\t`DueDate`\tTEXT NOT NULL,\n" +
                     "\t`DoDate`\tTEXT NOT NULL,\n" +
                     "\tPRIMARY KEY(`AssignmentID`)\n" +
+                    "\tFOREIGN KEY (`ClassID`) REFERENCES `Classes`" +
                     ")");
 
         }catch(Exception e){
