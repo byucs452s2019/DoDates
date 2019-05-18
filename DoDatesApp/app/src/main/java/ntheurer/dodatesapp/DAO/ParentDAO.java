@@ -19,7 +19,7 @@ public class ParentDAO {
     protected Statement stmt = null;
 
     public void openConnection() {
-        String connectionURL = "jdbc:sqlite:FamSearch.splite";
+        String connectionURL = "jdbc:sqlite:DoDates.sqlite";
 
         try {
             // Open a database connection
@@ -110,8 +110,8 @@ public class ParentDAO {
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS `StudentClasses` (\n" +
                     "\t`UserID`\tTEXT NOT NULL UNIQUE,\n" +
                     "\t`ClassID`\tTEXT NOT NULL UNIQUE,\n" +
-                    "\tFOREIGN KEY (`UserID`) REFERENCES `Students`" +
-                    "\tFOREIGN KEY (`ClassID`) REFERENCES `Classes`" +
+                    "\tFOREIGN KEY (`UserID`) REFERENCES `Students`\n" +
+                    "\tFOREIGN KEY (`ClassID`) REFERENCES `Classes`\n" +
                     ")");
         }catch(Exception e){
             e.printStackTrace();
@@ -138,7 +138,7 @@ public class ParentDAO {
                     "\t`DueDate`\tTEXT NOT NULL,\n" +
                     "\t`DoDate`\tTEXT NOT NULL,\n" +
                     "\tPRIMARY KEY(`AssignmentID`)\n" +
-                    "\tFOREIGN KEY (`ClassID`) REFERENCES `Classes`" +
+                    "\tFOREIGN KEY (`ClassID`) REFERENCES `Classes`\n" +
                     ")");
 
         }catch(Exception e){
