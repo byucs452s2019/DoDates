@@ -108,8 +108,8 @@ public class ParentDAO {
     void createStudentClassesTable(Statement stmt){
         try{
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS `StudentClasses` (\n" +
-                    "\t`UserID`\tTEXT NOT NULL UNIQUE,\n" +
-                    "\t`ClassID`\tTEXT NOT NULL UNIQUE,\n" +
+                    "\t`UserID`\tTEXT NOT NULL,\n" +
+                    "\t`ClassID`\tTEXT NOT NULL,\n" +
                     "\tFOREIGN KEY (`UserID`) REFERENCES `Students`\n" +
                     "\tFOREIGN KEY (`ClassID`) REFERENCES `Classes`\n" +
                     ")");
@@ -134,7 +134,7 @@ public class ParentDAO {
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS `Assignments` (\n" +
                     "\t`AssignmentID`\tTEXT NOT NULL UNIQUE,\n" +
                     "\t`AssignmentName`\tTEXT NOT NULL,\n" +
-                    "\t`ClassID`\tTEXT NOT NULL UNIQUE,\n" +
+                    "\t`ClassID`\tTEXT NOT NULL,\n" +
                     "\t`DueDate`\tTEXT NOT NULL,\n" +
                     "\t`DoDate`\tTEXT NOT NULL,\n" +
                     "\tPRIMARY KEY(`AssignmentID`)\n" +
