@@ -16,8 +16,12 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import ntheurer.dodatesapp.R;
 import ntheurer.dodatesapp.model.Assignment;
@@ -76,19 +80,30 @@ public class CalendarActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.calendar_assignment_recycler_view);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        sModel.updateAssignmentByDateMap();
-        Map<String, List<Assignment>> assignmentByDateMap = sModel.getAssignmentByDateMap();
-        Log.w(tag, "size of assignmentByDateMap = " + assignmentByDateMap.size());
-        List<Assignment> listOfAssignmentsToAdd = assignmentByDateMap.get(dateSelected);
-        if (listOfAssignmentsToAdd == null) {
-            Log.e(tag, "listOfAssignmentsToAdd is null");
+        sModel.updateAssignmentByDueDateMap();
+        sModel.updateAssignmentByDoDateMap();
+        Map<String, List<Assignment>> assignmentByDueDateMap = sModel.getAssignmentByDueDateMap();
+        Map<String, List<Assignment>> assignmentByDoDateMap = sModel.getAssignmentByDoDateMap();
+        Log.w(tag, "size of assignmentByDueDateMap = " + assignmentByDueDateMap.size());
+        Log.w(tag, "size of assignmentByDoDateMap = " + assignmentByDoDateMap.size());
+        Set<Assignment> setOfAssignmentsToAdd = new HashSet<>();
+        if (assignmentByDueDateMap != null && assignmentByDueDateMap.get(dateSelected) != null) {
+            setOfAssignmentsToAdd = new HashSet(assignmentByDueDateMap.get(dateSelected));
+        }
+        if ((assignmentByDoDateMap != null) && (assignmentByDoDateMap.get(dateSelected) != null)) {
+            Log.i(tag, "assignmentByDoDateMap is not null and has entry for " + dateSelected);
+            setOfAssignmentsToAdd.addAll(new HashSet<Assignment>(assignmentByDoDateMap.get(dateSelected)));
+        }
+        if (setOfAssignmentsToAdd.isEmpty()) {
+            Log.e(tag, "setOfAssignmentsToAdd is empty");
             Log.w(tag, "dateSelected: " + dateSelected);
-            Log.w(tag, "assignmentByDateMap.keySet() = " + assignmentByDateMap.keySet());
+            Log.w(tag, "assignmentByDueDateMap.keySet() = " + assignmentByDueDateMap.keySet());
+            Log.w(tag, "assignmentByDoDateMap.keySet() = " + assignmentByDoDateMap.keySet());
         }
         else {
-            Log.w(tag, "size of listOfAssignmentsToAdd = " + listOfAssignmentsToAdd.size());
+            Log.w(tag, "size of setOfAssignmentsToAdd = " + setOfAssignmentsToAdd.size());
         }
-        adapter = new CalendarActivity.RecyclerAdapter(listOfAssignmentsToAdd);
+        adapter = new CalendarActivity.RecyclerAdapter(new ArrayList<Assignment>(setOfAssignmentsToAdd));
         recyclerView.setAdapter(adapter);
         Log.w(tag, "refreshRecyclerView about to return");
     }

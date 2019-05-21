@@ -32,8 +32,11 @@ public class AddAssignmentActivity extends AppCompatActivity {
     private final String tag = "AddAssignmentActivity";
     private String assignmentName;
     private String dueDate;
-    private TextView displayDateTextView;
-    private DatePickerDialog.OnDateSetListener dateSetListener;
+    private String doDate;
+    private TextView displayDueDateTextView;
+    private TextView displayDoDateTextView;
+    private DatePickerDialog.OnDateSetListener dueDateSetListener;
+    private DatePickerDialog.OnDateSetListener doDateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,22 +46,23 @@ public class AddAssignmentActivity extends AppCompatActivity {
         final SingletonModel sModel = SingletonModel.getInstance();
 
         final EditText assignmentNameEditText = (EditText) findViewById(R.id.assignment_name_edit);
-        displayDateTextView = (TextView) findViewById(R.id.text_view_date);
+        displayDueDateTextView = (TextView) findViewById(R.id.text_view_due_date);
+        displayDoDateTextView = (TextView) findViewById(R.id.text_view_do_date);
 
-        dateSetListener = new DatePickerDialog.OnDateSetListener() {
+        dueDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                Log.w(tag, "dataSetListener");
+                Log.w(tag, "dueDateSetListener");
                 month = month + 1;
                 dueDate = month + "/" + dayOfMonth + "/" + year;
-                displayDateTextView.setText(dueDate);
+                displayDueDateTextView.setText(dueDate);
             }
         };
 
-        displayDateTextView.setOnClickListener(new View.OnClickListener() {
+        displayDueDateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.w(tag, "displayDateTextView clicked");
+                Log.w(tag, "displayDueDateTextView clicked");
                 Calendar calendar = Calendar.getInstance();
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
@@ -67,7 +71,36 @@ public class AddAssignmentActivity extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                         AddAssignmentActivity.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        dateSetListener,
+                        dueDateSetListener,
+                        year, month, day);
+                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                datePickerDialog.show();
+            }
+        });
+
+        doDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                Log.w(tag, "doDateSetListener");
+                month = month + 1;
+                doDate = month + "/" + dayOfMonth + "/" + year;
+                displayDoDateTextView.setText(doDate);
+            }
+        };
+
+        displayDoDateTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.w(tag, "displayDoDateTextView clicked");
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        AddAssignmentActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        doDateSetListener,
                         year, month, day);
                 datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 datePickerDialog.show();
@@ -81,7 +114,7 @@ public class AddAssignmentActivity extends AppCompatActivity {
                 Log.w(tag, "confirmButton clicked");
                 String currClassID = sModel.getCurrClassID();
                 assignmentName = assignmentNameEditText.getText().toString();
-                Assignment assignment = new Assignment(assignmentName, dueDate, (sModel.getUserClassMap()).get(currClassID));
+                Assignment assignment = new Assignment(assignmentName, dueDate, doDate, (sModel.getUserClassMap()).get(currClassID));
                 ((sModel.getUserClassMap()).get(currClassID)).addSingleAssignment(assignment);
                 Intent myIntent = new Intent(AddAssignmentActivity.this, ClassDetailsActivity.class);
                 AddAssignmentActivity.this.startActivity(myIntent);

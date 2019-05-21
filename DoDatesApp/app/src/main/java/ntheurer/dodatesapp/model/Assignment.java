@@ -5,6 +5,7 @@ import java.util.Date;
 public class Assignment {
     private String assignmentName;
     private String dueDate;
+    private String doDate;
     private UserClass userClass;
 
     public Assignment(String assignmentName, String dueDate) {
@@ -12,9 +13,10 @@ public class Assignment {
         this.dueDate = dueDate;
     }
 
-    public Assignment(String assignmentName, String dueDate, UserClass userClass) {
+    public Assignment(String assignmentName, String dueDate, String doDate, UserClass userClass) {
         this.assignmentName = assignmentName;
         this.dueDate = dueDate;
+        this.doDate = doDate;
         this.userClass = userClass;
     }
 
@@ -32,6 +34,14 @@ public class Assignment {
 
     public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public String getDoDate() {
+        return doDate;
+    }
+
+    public void setDoDate(String dueDate) {
+        this.doDate = doDate;
     }
 
     public UserClass getUserClass() {

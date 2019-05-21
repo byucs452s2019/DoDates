@@ -20,6 +20,7 @@
     <string name="assignment_list">Assignments</string>
     <string name="assignment_name">Assignment Name</string>
     <string name="due_date">Due Date</string>
+    <string name="do_date">Do Date</string>
     <string name="touch_to_select_date">Touch to Select Date</string>
     <string name="add_class">Add Class</string>
     <string name="class_assignments">Class Assignments</string>

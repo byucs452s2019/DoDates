@@ -4,10 +4,12 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ntheurer.homeworkscheduler.ui.AddAssignmentActivity"
+    tools:context="ntheurer.dodatesapp.ui.AddAssignmentActivity"
     android:paddingBottom="50dp"
     android:paddingTop="50dp"
     android:layout_margin="10dp">
+
+
 
     <TextView
         android:id="@+id/assignment_name_category"
@@ -34,13 +36,14 @@
         android:layout_marginStart="10dp" />
 
 
+
     <TextView
-        android:id="@+id/assignment_date_category"
+        android:id="@+id/assignment_due_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/due_date"
         android:layout_below="@id/assignment_name_category"
-        android:layout_centerHorizontal="@id/assignment_date_category"
+        android:layout_centerHorizontal="@id/assignment_due_category"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         android:padding="10dp"
         android:layout_marginRight="30dp"
@@ -48,13 +51,13 @@
         android:layout_marginTop="20dp"/>
 
     <TextView
-        android:id="@+id/text_view_date"
+        android:id="@+id/text_view_due_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/touch_to_select_date"
         android:background="@drawable/border"
-        android:layout_toRightOf="@id/assignment_date_category"
-        android:layout_toEndOf="@id/assignment_date_category"
+        android:layout_toRightOf="@id/assignment_due_category"
+        android:layout_toEndOf="@id/assignment_due_category"
         android:layout_below="@id/assignment_name_edit"
 
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
@@ -62,6 +65,38 @@
         android:layout_marginLeft="30dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"/>
+
+
+
+    <TextView
+        android:id="@+id/assignment_do_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/do_date"
+        android:layout_below="@id/assignment_due_category"
+        android:layout_centerHorizontal="@id/assignment_do_category"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:padding="10dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/text_view_do_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/touch_to_select_date"
+        android:background="@drawable/border"
+        android:layout_toRightOf="@id/assignment_do_category"
+        android:layout_toEndOf="@id/assignment_do_category"
+        android:layout_below="@id/text_view_due_date"
+
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:padding="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"/>
+
 
 
     <RelativeLayout

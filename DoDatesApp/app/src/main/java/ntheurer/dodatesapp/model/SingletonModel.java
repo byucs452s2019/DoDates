@@ -15,7 +15,8 @@ public class SingletonModel {
     private List<String> colorList;
     private Map<String, String> colorMap;
     private String currClassID;
-    private Map<String, List<Assignment>> assignmentByDateMap; //key = date, value = assignment
+    private Map<String, List<Assignment>> assignmentByDueDateMap; //key = date, value = assignment
+    private Map<String, List<Assignment>> assignmentByDoDateMap; //key = date, value = assignment
 
     private SingletonModel() {
         userClassList = new ArrayList<>();
@@ -37,7 +38,8 @@ public class SingletonModel {
 
         currClassID = null;
 
-        assignmentByDateMap = new TreeMap<>();
+        assignmentByDueDateMap = new TreeMap<>();
+        assignmentByDoDateMap = new TreeMap<>();
     }
 
     public static SingletonModel getInstance( ) {
@@ -81,24 +83,46 @@ public class SingletonModel {
         this.currClassID = currClassID;
     }
 
-    public Map<String, List<Assignment>> getAssignmentByDateMap() {
-        return assignmentByDateMap;
+    public Map<String, List<Assignment>> getAssignmentByDueDateMap() {
+        return assignmentByDueDateMap;
     }
 
-    public void updateAssignmentByDateMap() {
-        assignmentByDateMap.clear();
-        assignmentByDateMap = new TreeMap<>();
+    public Map<String, List<Assignment>> getAssignmentByDoDateMap() {
+        return assignmentByDoDateMap;
+    }
+
+    public void updateAssignmentByDueDateMap() {
+        assignmentByDueDateMap.clear();
+        assignmentByDueDateMap = new TreeMap<>();
         for (UserClass userClass : userClassList) {
             for (Assignment assignment : userClass.getAssignments()) {
-                if (assignmentByDateMap.get(assignment.getDueDate()) == null) {
+                if (assignmentByDueDateMap.get(assignment.getDueDate()) == null) {
                     List<Assignment> list = new ArrayList<>();
                     list.add(assignment);
-                    assignmentByDateMap.put(assignment.getDueDate(), list);
+                    assignmentByDueDateMap.put(assignment.getDueDate(), list);
                 }
                 else {
-                    assignmentByDateMap.get(assignment.getDueDate()).add(assignment);
+                    assignmentByDueDateMap.get(assignment.getDueDate()).add(assignment);
                 }
-                Log.w("SingleTonModel", "Size of assignmentByDateMap = " + assignmentByDateMap.size());
+                Log.w("SingleTonModel", "Size of assignmentByDueDateMap = " + assignmentByDueDateMap.size());
+            }
+        }
+    }
+
+    public void updateAssignmentByDoDateMap() {
+        assignmentByDoDateMap.clear();
+        assignmentByDoDateMap = new TreeMap<>();
+        for (UserClass userClass : userClassList) {
+            for (Assignment assignment : userClass.getAssignments()) {
+                if (assignmentByDoDateMap.get(assignment.getDoDate()) == null) {
+                    List<Assignment> list = new ArrayList<>();
+                    list.add(assignment);
+                    assignmentByDoDateMap.put(assignment.getDoDate(), list);
+                }
+                else {
+                    assignmentByDoDateMap.get(assignment.getDoDate()).add(assignment);
+                }
+                Log.w("SingleTonModel", "Size of assignmentByDoDateMap = " + assignmentByDoDateMap.size());
             }
         }
     }
