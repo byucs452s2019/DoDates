@@ -55,10 +55,12 @@ public class SingletonModel {
     }
 
     public List<UserClass> getUserClassList() {
+        //TODO: Call class dao
         return userClassList;
     }
 
     public Map<String, UserClass> getUserClassMap() {
+        //TODO: Call class dao?
         return userClassMap;
     }
 
@@ -71,6 +73,7 @@ public class SingletonModel {
     }
 
     public void addClass(UserClass userClass) {
+        //TODO: Call class dao (to access class table and studentclass table
         userClassList.add(userClass);
         userClassMap.put(userClass.getUniqueID(), userClass);
     }

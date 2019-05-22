@@ -3,19 +3,10 @@ package ntheurer.dodatesapp.DAO;
 import java.sql.Connection;
 import java.sql.Statement;
 
-public class StudentsDAO {
-
-    private Connection connection = null;
-    private Statement stmt = null;
-    private ParentDAO parentDAO = null;
-
-    public StudentsDAO() {
-        parentDAO = new ParentDAO();
-    }
+public class StudentsDAO extends ParentDAO {
 
     public boolean addStudent(String userID, String userName, String password) {
-        parentDAO.openConnection();
-        connection = parentDAO.connection;
+        openConnection();
         try {
             stmt = connection.createStatement();
 
@@ -27,19 +18,18 @@ public class StudentsDAO {
                     ");");
 
             closeStatement();
-            parentDAO.closeConnection(true);
+            closeConnection(true);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             closeStatement();
-            parentDAO.closeConnection(false);
+            closeConnection(false);
             return false;
         }
     }
 
     public boolean removeStudent(String userID) {
-        parentDAO.openConnection();
-        connection = parentDAO.connection;
+        openConnection();
         try {
             stmt = connection.createStatement();
 
@@ -47,12 +37,12 @@ public class StudentsDAO {
                     "WHERE UserID = '" + userID + "';");
 
             closeStatement();
-            parentDAO.closeConnection(true);
+            closeConnection(true);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             closeStatement();
-            parentDAO.closeConnection(false);
+            closeConnection(false);
             return false;
         }
     }
