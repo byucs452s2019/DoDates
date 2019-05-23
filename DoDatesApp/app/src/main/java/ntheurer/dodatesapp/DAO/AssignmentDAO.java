@@ -1,5 +1,11 @@
 package ntheurer.dodatesapp.DAO;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import ntheurer.dodatesapp.model.Assignment;
+
 public class AssignmentDAO extends ParentDAO {
     public boolean addAssignment(String assignmentID, String AssignmentName, String ClassID, String DueDate, String DoDate) {
         openConnection();
@@ -25,6 +31,34 @@ public class AssignmentDAO extends ParentDAO {
             return false;
         }
     }
+
+    public List<Assignment> getAssignments(String classID){
+        openConnection();
+        try{
+            stmt = connection.createStatement();
+
+            String query = "SELECT * " +
+                    "FROM Assignments " +
+                    "WHERE ClassID = \"" + classID + "\"";
+
+            ResultSet rs = stmt.executeQuery(query);
+            List<Assignment> allAssignments = new ArrayList<Assignment>();
+            while(rs.next()){
+                Assignment myAssignment = new Assignment(rs.getString("AssignmentName"), rs.getString("DueDate"), rs.getString("DoDate"));
+                allAssignments.add(myAssignment);
+            }
+            closeStatement();
+            closeConnection(true);
+            return allAssignments;
+        } catch (Exception e){
+            e.printStackTrace();
+            closeStatement();
+            closeConnection(false);
+            List<Assignment> badlist = new ArrayList<Assignment>();
+            return badlist;
+        }
+    }
+
 
     private void closeStatement() {
         try {
