@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import ntheurer.dodatesapp.DAO.StudentsDAO;
 
+import static org.junit.Assert.assertEquals;
+
 public class StudentsDAOTest {
 
     @Test
@@ -15,6 +17,18 @@ public class StudentsDAOTest {
 
         try {
             studentsDAO.addStudent(userID, userName, password);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testLogin() {
+        String userName = "ntg2";
+        StudentsDAO studentsDAO = new StudentsDAO();
+        try {
+            String userID = studentsDAO.login(userName);
+            assertEquals("ntgID2", userID);
         } catch (Exception e) {
             e.printStackTrace();
         }

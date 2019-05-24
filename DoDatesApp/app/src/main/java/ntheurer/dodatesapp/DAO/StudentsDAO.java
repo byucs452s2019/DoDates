@@ -1,6 +1,8 @@
 package ntheurer.dodatesapp.DAO;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class StudentsDAO extends ParentDAO {
@@ -25,6 +27,28 @@ public class StudentsDAO extends ParentDAO {
             closeStatement();
             closeConnection(false);
             return false;
+        }
+    }
+
+    public String login(String username){
+        openConnection();
+        try {
+            String query = "select * from Students where UserName = ?";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1, username);
+            ResultSet results = stmt.executeQuery();
+            String userID = null;
+            //create token from database result
+            while (results.next()) {
+                userID = results.getString(1);
+            }
+            return userID;
+
+        } catch (Exception e){
+            e.printStackTrace();
+            closeStatement();
+            closeConnection(false);
+            return null;
         }
     }
 
