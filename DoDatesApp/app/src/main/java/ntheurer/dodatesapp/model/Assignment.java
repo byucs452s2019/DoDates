@@ -20,6 +20,12 @@ public class Assignment {
         this.userClass = userClass;
     }
 
+    public Assignment(String assignmentName, String dueDate, String doDate){
+        this.assignmentName = assignmentName;
+        this.dueDate = dueDate;
+        this.doDate = doDate;
+    }
+
     public String getAssignmentName() {
         return assignmentName;
     }
