@@ -24,6 +24,7 @@ public class Assignment {
         this.assignmentName = assignmentName;
         this.dueDate = dueDate;
         this.doDate = doDate;
+        this.userClass = null;
     }
 
     public String getAssignmentName() {

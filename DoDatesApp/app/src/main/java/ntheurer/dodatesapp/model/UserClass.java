@@ -10,7 +10,7 @@ public class UserClass {
     private String className;
     private List<Assignment> assignments;
     private String colorString;
-    private final String uniqueID = UUID.randomUUID().toString();
+    private String uniqueID = UUID.randomUUID().toString();
 
     public UserClass(String className, String colorString) {
         this.className = className;
@@ -54,6 +54,10 @@ public class UserClass {
 
     public String getUniqueID() {
         return uniqueID;
+    }
+
+    public void setUniqueID(String id) {
+        this.uniqueID = id;
     }
 
     public void addSingleAssignment(Assignment assignment) {
