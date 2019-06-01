@@ -11,13 +11,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import model.UserClass;
 import ntheurer.dodatesapp.R;
 import ntheurer.dodatesapp.model.SingletonModel;
 import ntheurer.dodatesapp.adapters.SpinnerAdapter;
-import ntheurer.dodatesapp.model.UserClass;
 
 public class AddClassActivity extends AppCompatActivity {
 

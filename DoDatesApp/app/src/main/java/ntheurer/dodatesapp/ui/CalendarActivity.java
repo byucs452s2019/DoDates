@@ -17,16 +17,15 @@ import android.widget.CalendarView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import model.Assignment;
+import model.UserClass;
 import ntheurer.dodatesapp.R;
-import ntheurer.dodatesapp.model.Assignment;
 import ntheurer.dodatesapp.model.SingletonModel;
-import ntheurer.dodatesapp.model.UserClass;
 
 public class CalendarActivity extends AppCompatActivity {
 
@@ -110,17 +109,17 @@ public class CalendarActivity extends AppCompatActivity {
 
     /*private void setupForTesting() {
         SingletonModel sModel = SingletonModel.getInstance();
-        UserClass userClass = new UserClass("Math", (sModel.getColorList()).get(1));
-        Assignment assignment = new Assignment("written", "11/12/2018", userClass);
+        model.UserClass userClass = new model.UserClass("Math", (sModel.getColorList()).get(1));
+        model.Assignment assignment = new model.Assignment("written", "11/12/2018", userClass);
         userClass.addSingleAssignment(assignment);
         sModel.addClass(userClass);
 
-        UserClass userClass2 = new UserClass("Science", (sModel.getColorList()).get(2));
-        Assignment assignment2 = new Assignment("Online", "11/13/2018", userClass2);
+        model.UserClass userClass2 = new model.UserClass("Science", (sModel.getColorList()).get(2));
+        model.Assignment assignment2 = new model.Assignment("Online", "11/13/2018", userClass2);
         userClass2.addSingleAssignment(assignment2);
-        Assignment assignment3 = new Assignment("Test", "11/12/2018", userClass2);
+        model.Assignment assignment3 = new model.Assignment("Test", "11/12/2018", userClass2);
         userClass2.addSingleAssignment(assignment3);
-        Assignment assignment4 = new Assignment("Quiz", "11/13/2018", userClass2);
+        model.Assignment assignment4 = new model.Assignment("Quiz", "11/13/2018", userClass2);
         userClass2.addSingleAssignment(assignment4);
         sModel.addClass(userClass2);
     }*/

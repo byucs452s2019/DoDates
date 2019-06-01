@@ -8,24 +8,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
+import model.Assignment;
 import ntheurer.dodatesapp.R;
-import ntheurer.dodatesapp.adapters.SpinnerAdapter;
-import ntheurer.dodatesapp.model.Assignment;
 import ntheurer.dodatesapp.model.SingletonModel;
-import ntheurer.dodatesapp.model.UserClass;
 
 public class AddAssignmentActivity extends AppCompatActivity {
 

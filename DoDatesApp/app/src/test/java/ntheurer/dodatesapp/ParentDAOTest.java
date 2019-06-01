@@ -2,9 +2,7 @@ package ntheurer.dodatesapp;
 
 import org.junit.Test;
 
-import ntheurer.dodatesapp.DAO.ParentDAO;
-
-import static org.junit.Assert.*;
+import DAO.ParentDAO;
 
 public class ParentDAOTest {
     @Test

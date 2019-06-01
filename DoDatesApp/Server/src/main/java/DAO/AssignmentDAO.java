@@ -1,10 +1,10 @@
-package ntheurer.dodatesapp.DAO;
+package DAO;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import ntheurer.dodatesapp.model.Assignment;
+import model.Assignment;
 
 public class AssignmentDAO extends ParentDAO {
     public boolean addAssignment(String assignmentID, String AssignmentName, String ClassID, String DueDate, String DoDate) {

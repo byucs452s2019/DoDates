@@ -4,10 +4,8 @@ import org.junit.Test;
 
 import java.util.List;
 
-import ntheurer.dodatesapp.DAO.ClassDAO;
+import DAO.ClassDAO;
 import ntheurer.dodatesapp.model.UserClass;
-
-import static org.junit.Assert.*;
 
 public class ClassDAOTest {
 

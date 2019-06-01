@@ -2,15 +2,12 @@ package ntheurer.dodatesapp.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,10 +16,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import model.Assignment;
 import ntheurer.dodatesapp.R;
-import ntheurer.dodatesapp.model.Assignment;
 import ntheurer.dodatesapp.model.SingletonModel;
-import ntheurer.dodatesapp.model.UserClass;
 
 public class ClassDetailsActivity extends AppCompatActivity {
 

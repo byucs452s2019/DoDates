@@ -1,6 +1,5 @@
 package ntheurer.dodatesapp.model;
 
-import android.util.ArrayMap;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -8,11 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
-import ntheurer.dodatesapp.DAO.AssignmentDAO;
-import ntheurer.dodatesapp.DAO.ClassDAO;
-import ntheurer.dodatesapp.DAO.ParentDAO;
-import ntheurer.dodatesapp.DAO.StudentsDAO;
+import model.Assignment;
+import model.UserClass;
+import ntheurer.dodatesapp.ServerProxy;
 
 public class SingletonModel {
     private static SingletonModel singleton = new SingletonModel();
@@ -24,6 +21,7 @@ public class SingletonModel {
     private String currClassID;
     private Map<String, List<Assignment>> assignmentByDueDateMap; //key = date, value = assignment
     private Map<String, List<Assignment>> assignmentByDoDateMap; //key = date, value = assignment
+    private ServerProxy proxy = new ServerProxy();
 
     private SingletonModel() {
         currUserID = "ntgID2"; //FIXME
@@ -65,19 +63,17 @@ public class SingletonModel {
 
     public List<UserClass> getUserClassList() {
         //Call class dao
-        ClassDAO classDAO = new ClassDAO();
         userClassList.clear();
         userClassList = new ArrayList<>();
-        userClassList = classDAO.getClasses(currUserID);
+        userClassList = proxy.getClasses(currUserID);
 
         if (userClassList == null) {
             Log.w("SingletonModel", "userClassList was null from classDAO");
             userClassList = new ArrayList<>();
         }
 
-        AssignmentDAO assignmentDAO = new AssignmentDAO();
         for (UserClass uc : userClassList) { //add assignments to class objects
-            List<Assignment> ucAssignments = assignmentDAO.getAssignments(uc.getUniqueID());
+            List<Assignment> ucAssignments = proxy.getAssignments(uc.getUniqueID());
             for (Assignment currAssignment : ucAssignments) { //make sure each assignment has the class in it
                 if (currAssignment.getUserClass() == null) {
                     currAssignment.setUserClass(uc);
@@ -109,8 +105,7 @@ public class SingletonModel {
 
     public void addClass(UserClass userClass) {
         //Call class dao (to access class table and studentclass table
-        ClassDAO classDAO = new ClassDAO();
-        classDAO.addClass(userClass.getUniqueID(), userClass.getClassName(), userClass.getColorString(), currUserID);
+        proxy.addClass(userClass.getUniqueID(), userClass.getClassName(), userClass.getColorString(), currUserID);
 //        userClassList.add(userClass);
 //        userClassMap.put(userClass.getUniqueID(), userClass);
     }

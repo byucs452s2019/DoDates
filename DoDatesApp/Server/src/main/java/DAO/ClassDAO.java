@@ -1,9 +1,9 @@
-package ntheurer.dodatesapp.DAO;
+package DAO;
 
 import java.sql.*;
 import java.util.*;
 
-import ntheurer.dodatesapp.model.UserClass;
+import model.UserClass;
 
 
 public class ClassDAO extends ParentDAO{

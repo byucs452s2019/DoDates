@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.view.*;
 
 import ntheurer.dodatesapp.R;
+import ntheurer.dodatesapp.ServerProxy;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -42,6 +43,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.w(tag, "loginButton clicked");
+                ServerProxy proxy = new ServerProxy();
+                proxy.login("username");
                 Intent myIntent = new Intent(LoginActivity.this, CalendarActivity.class);
                 LoginActivity.this.startActivity(myIntent);
             }

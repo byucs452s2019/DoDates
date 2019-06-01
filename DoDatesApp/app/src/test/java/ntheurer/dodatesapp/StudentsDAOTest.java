@@ -2,7 +2,7 @@ package ntheurer.dodatesapp;
 
 import org.junit.Test;
 
-import ntheurer.dodatesapp.DAO.StudentsDAO;
+import DAO.StudentsDAO;
 
 import static org.junit.Assert.assertEquals;
 
