@@ -4,8 +4,9 @@ import org.junit.Test;
 
 import java.util.List;
 
+import model.Assignment;
+
 import DAO.AssignmentDAO;
-import ntheurer.dodatesapp.model.Assignment;
 
 public class AssignmentDAOTest {
 

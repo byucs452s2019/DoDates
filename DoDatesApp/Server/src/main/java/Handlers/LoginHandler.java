@@ -15,6 +15,7 @@ import DAO.StudentsDAO;
 public class LoginHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
+        System.out.println("in LoginHandler handle");
         boolean success = false;
         StudentsDAO studentsDAO = new StudentsDAO();
         try{

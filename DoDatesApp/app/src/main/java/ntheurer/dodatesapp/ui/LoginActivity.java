@@ -1,6 +1,7 @@
 package ntheurer.dodatesapp.ui;
 
 import android.content.Intent;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,9 @@ public class LoginActivity extends AppCompatActivity {
         Log.w(tag, "onCreate: started");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         final EditText usernameEditText = findViewById(R.id.usernameEditText);
         final EditText passwordEditText = findViewById(R.id.passwordEditText);
@@ -44,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.w(tag, "loginButton clicked");
                 ServerProxy proxy = new ServerProxy();
-                proxy.login("username");
+                proxy.login("ntg");
                 Intent myIntent = new Intent(LoginActivity.this, CalendarActivity.class);
                 LoginActivity.this.startActivity(myIntent);
             }

@@ -8,6 +8,6 @@ import java.io.IOException;
 public class AddClassHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-
+        System.out.println("In AddClassHandler handle");
     }
 }

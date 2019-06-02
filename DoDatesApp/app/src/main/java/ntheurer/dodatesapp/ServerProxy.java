@@ -10,12 +10,19 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import model.Assignment;
 import model.UserClass;
 
 public class ServerProxy {
 
-    String host = "192.168.1.26";//modify based on server location
+    protected String host;
+
+    public ServerProxy() {
+        host = "10.0.2.2";//modify based on server location //usually 10.0.2.2 or 127.0.0.1 or localhost or ip address maybe
+        //If you changed the host value, make sure to change the value in res/xml/network_security_config.xml
+    }
 
     public boolean addStudent(String userID, String userName, String password){
 
@@ -26,11 +33,15 @@ public class ServerProxy {
 
         Gson gson;
         try{
-            URL url = new URL ("http://" + host + ":8080/student/login");//sets url
+            String urlStr = "http://" + host + ":8080/student/login";
+            System.out.println("urlStr = \'" + urlStr + "\'");
+            URL url = new URL (urlStr);//sets url
+//            URL url = new URL ("https://" + ":8080/student/login");
 
             gson = new GsonBuilder().setPrettyPrinting().create();//makes request body
             String reqData = gson.toJson(username);
 
+//            HttpsURLConnection https = (HttpsURLConnection)url.openConnection();
             HttpURLConnection http = (HttpURLConnection)url.openConnection();//set GET/POST
             http.setRequestMethod("POST");
             http.setDoOutput(true);

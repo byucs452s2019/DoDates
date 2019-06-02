@@ -9,7 +9,7 @@ public class ParentDAOTest {
     public void addTables() throws Exception{
         ParentDAO parent = new ParentDAO();
         parent.openConnection();
-        //parent.dropTables();
+        parent.dropTables();
         parent.createTables();
         parent.closeConnection(true);
     }

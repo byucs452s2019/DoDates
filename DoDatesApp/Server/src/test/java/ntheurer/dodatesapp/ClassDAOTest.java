@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.util.List;
 
 import DAO.ClassDAO;
-import ntheurer.dodatesapp.model.UserClass;
+import model.UserClass;
 
 public class ClassDAOTest {
 
@@ -14,8 +14,8 @@ public class ClassDAOTest {
         ClassDAO classDAO = new ClassDAO();
 
         try{
-            classDAO.addClass("cID", "CS452", "blue", "ntgID2");
-            classDAO.addClass("cID2", "CS142", "green", "ntgID2");
+            classDAO.addClass("cID", "BlueClass", "blue", "ntgID");
+            classDAO.addClass("cID2", "GreenClass", "green", "ntgID");
 
         } catch (Exception e){
             e.printStackTrace();
@@ -30,7 +30,7 @@ public class ClassDAOTest {
 //            classDAO.addClass("cID", "CS452", "blue", "ntgID2");
 //            classDAO.addClass("cID2", "CS142", "green", "ntgID2");
 //            classDAO.addClass("cID3", "CS500", "red", "ntgID3");
-            List<UserClass> myClasses = classDAO.getClasses("ntgID2");
+            List<UserClass> myClasses = classDAO.getClasses("ntgID");
             System.out.println(myClasses.size());
 
         } catch (Exception e){
