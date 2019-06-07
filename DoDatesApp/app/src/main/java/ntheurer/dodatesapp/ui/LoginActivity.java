@@ -28,13 +28,17 @@ public class LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = findViewById(R.id.usernameEditText);
         final EditText passwordEditText = findViewById(R.id.passwordEditText);
 
+
         Button registerButton = findViewById(R.id.registerButton);
         registerButton.setOnClickListener(new View.OnClickListener() {
-            String username = usernameEditText.getText().toString();
-            String password = passwordEditText.getText().toString();
+
             @Override
             public void onClick(View v) {
+                String username = usernameEditText.getText().toString();
+                String password = passwordEditText.getText().toString();
                 Log.w(tag, "registerButton clicked");
+                ServerProxy proxy = new ServerProxy();
+                proxy.login(username);
                 Intent myIntent = new Intent(LoginActivity.this, CalendarActivity.class);
                 LoginActivity.this.startActivity(myIntent);
             }
@@ -42,13 +46,14 @@ public class LoginActivity extends AppCompatActivity {
 
         Button loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
-            String username = usernameEditText.getText().toString();
-            String password = passwordEditText.getText().toString();
+
             @Override
             public void onClick(View v) {
+                String username = usernameEditText.getText().toString();
+                String password = passwordEditText.getText().toString();
                 Log.w(tag, "loginButton clicked");
                 ServerProxy proxy = new ServerProxy();
-                proxy.login("ntg");
+                proxy.login(username);
                 Intent myIntent = new Intent(LoginActivity.this, CalendarActivity.class);
                 LoginActivity.this.startActivity(myIntent);
             }
