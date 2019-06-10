@@ -12,6 +12,11 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import DumbDataHolders.AssignmentDumbData;
+import DumbDataHolders.AssignmentListWrap;
+import DumbDataHolders.ClassDumbData;
+import DumbDataHolders.ClassListWrap;
+import DumbDataHolders.StudentDumbData;
 import model.Assignment;
 import model.UserClass;
 
@@ -25,8 +30,45 @@ public class ServerProxy {
     }
 
     public boolean addStudent(String userID, String userName, String password){
+        Gson gson;
+        try{
+            String urlStr = "http://" + host + ":8080/student/add";
+            System.out.println("urlStr = \'" + urlStr + "\'");
+            URL url = new URL (urlStr);//sets url
+//            URL url = new URL ("https://" + ":8080/student/login");
 
-        return true;
+            gson = new GsonBuilder().setPrettyPrinting().create();//makes request body
+            StudentDumbData dumbData = new StudentDumbData(userID, userName, password);
+            String reqData = gson.toJson(dumbData);
+
+//            HttpsURLConnection https = (HttpsURLConnection)url.openConnection();
+            HttpURLConnection http = (HttpURLConnection)url.openConnection();//set GET/POST
+            http.setRequestMethod("POST");
+            http.setDoOutput(true);
+            http.connect();//sends request
+
+            OutputStreamWriter reqBody = new OutputStreamWriter(http.getOutputStream());
+            reqBody.write(reqData);
+            reqBody.flush();
+            reqBody.close();
+
+            //checking response;
+            if(http.getResponseCode() == HttpURLConnection.HTTP_OK){//checks if login successful
+                InputStreamReader respBody = new InputStreamReader(http.getInputStream());
+                gson = new Gson();
+                Boolean response = gson.fromJson(respBody, Boolean.class);
+                respBody.close();
+                http.disconnect();
+                return response;
+            }
+            else{
+                return false;
+            }
+
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public String login(String username) {
@@ -74,20 +116,173 @@ public class ServerProxy {
 
     public boolean addClass(String classID, String className, String colorName, String userID) {
 
-        return true;
+        Gson gson;
+        try{
+            String urlStr = "http://" + host + ":8080/class/add";
+            System.out.println("urlStr = \'" + urlStr + "\'");
+            URL url = new URL (urlStr);//sets url
+//            URL url = new URL ("https://" + ":8080/student/login");
+
+            gson = new GsonBuilder().setPrettyPrinting().create();//makes request body
+            ClassDumbData dumbData = new ClassDumbData(classID, className, colorName, userID);
+            String reqData = gson.toJson(dumbData);
+
+//            HttpsURLConnection https = (HttpsURLConnection)url.openConnection();
+            HttpURLConnection http = (HttpURLConnection)url.openConnection();//set GET/POST
+            http.setRequestMethod("POST");
+            http.setDoOutput(true);
+            http.connect();//sends request
+
+            OutputStreamWriter reqBody = new OutputStreamWriter(http.getOutputStream());
+            reqBody.write(reqData);
+            reqBody.flush();
+            reqBody.close();
+
+            //checking response;
+            if(http.getResponseCode() == HttpURLConnection.HTTP_OK){//checks if login successful
+                InputStreamReader respBody = new InputStreamReader(http.getInputStream());
+                gson = new Gson();
+                Boolean response = gson.fromJson(respBody, Boolean.class);
+                respBody.close();
+                http.disconnect();
+                return response;
+            }
+            else{
+                return false;
+            }
+
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public List<UserClass> getClasses(String userID){
 
+        Gson gson;
+        try{
+            String urlStr = "http://" + host + ":8080/class/get";
+            System.out.println("urlStr = \'" + urlStr + "\'");
+            URL url = new URL (urlStr);//sets url
+//            URL url = new URL ("https://" + ":8080/student/login");
+
+            gson = new GsonBuilder().setPrettyPrinting().create();//makes request body
+            String reqData = gson.toJson(userID);
+
+//            HttpsURLConnection https = (HttpsURLConnection)url.openConnection();
+            HttpURLConnection http = (HttpURLConnection)url.openConnection();//set GET/POST
+            http.setRequestMethod("GET");
+            http.setDoOutput(true);
+            http.connect();//sends request
+
+            OutputStreamWriter reqBody = new OutputStreamWriter(http.getOutputStream());
+            reqBody.write(reqData);
+            reqBody.flush();
+            reqBody.close();
+
+            //checking response;
+            if(http.getResponseCode() == HttpURLConnection.HTTP_OK){//checks if login successful
+                InputStreamReader respBody = new InputStreamReader(http.getInputStream());
+                gson = new Gson();
+                ClassListWrap response = gson.fromJson(respBody, ClassListWrap.class);
+                respBody.close();
+                http.disconnect();
+                return response.classList;
+            }
+            else{
+                return null;
+            }
+
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+
         return null;
+
     }
 
     public boolean addAssignment(String assignmentID, String AssignmentName, String ClassID, String DueDate, String DoDate) {
 
-        return true;
+        Gson gson;
+        try{
+            String urlStr = "http://" + host + ":8080/assignment/add";
+            System.out.println("urlStr = \'" + urlStr + "\'");
+            URL url = new URL (urlStr);//sets url
+//            URL url = new URL ("https://" + ":8080/student/login");
+
+            gson = new GsonBuilder().setPrettyPrinting().create();//makes request body
+            AssignmentDumbData dumbData = new AssignmentDumbData(assignmentID, AssignmentName, ClassID, DueDate, DoDate);
+            String reqData = gson.toJson(dumbData);
+
+//            HttpsURLConnection https = (HttpsURLConnection)url.openConnection();
+            HttpURLConnection http = (HttpURLConnection)url.openConnection();//set GET/POST
+            http.setRequestMethod("POST");
+            http.setDoOutput(true);
+            http.connect();//sends request
+
+            OutputStreamWriter reqBody = new OutputStreamWriter(http.getOutputStream());
+            reqBody.write(reqData);
+            reqBody.flush();
+            reqBody.close();
+
+            //checking response;
+            if(http.getResponseCode() == HttpURLConnection.HTTP_OK){//checks if login successful
+                InputStreamReader respBody = new InputStreamReader(http.getInputStream());
+                gson = new Gson();
+                Boolean response = gson.fromJson(respBody, Boolean.class);
+                respBody.close();
+                http.disconnect();
+                return response;
+            }
+            else{
+                return false;
+            }
+
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public List<Assignment> getAssignments(String classID){
+
+        Gson gson;
+        try{
+            String urlStr = "http://" + host + ":8080/class/get";
+            System.out.println("urlStr = \'" + urlStr + "\'");
+            URL url = new URL (urlStr);//sets url
+//            URL url = new URL ("https://" + ":8080/student/login");
+
+            gson = new GsonBuilder().setPrettyPrinting().create();//makes request body
+            String reqData = gson.toJson(classID);
+
+//            HttpsURLConnection https = (HttpsURLConnection)url.openConnection();
+            HttpURLConnection http = (HttpURLConnection)url.openConnection();//set GET/POST
+            http.setRequestMethod("GET");
+            http.setDoOutput(true);
+            http.connect();//sends request
+
+            OutputStreamWriter reqBody = new OutputStreamWriter(http.getOutputStream());
+            reqBody.write(reqData);
+            reqBody.flush();
+            reqBody.close();
+
+            //checking response;
+            if(http.getResponseCode() == HttpURLConnection.HTTP_OK){//checks if login successful
+                InputStreamReader respBody = new InputStreamReader(http.getInputStream());
+                gson = new Gson();
+                AssignmentListWrap response = gson.fromJson(respBody, AssignmentListWrap.class);
+                respBody.close();
+                http.disconnect();
+                return response.assignmentList;
+            }
+            else{
+                return null;
+            }
+
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
 
         return null;
     }
