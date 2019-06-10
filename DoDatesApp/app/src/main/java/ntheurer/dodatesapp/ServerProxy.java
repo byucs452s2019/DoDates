@@ -53,7 +53,7 @@ public class ServerProxy {
             reqBody.close();
 
             //checking response;
-            if(http.getResponseCode() == HttpURLConnection.HTTP_OK){//checks if login successful
+            if(http.getResponseCode() == HttpURLConnection.HTTP_OK){//checks if add student successful
                 InputStreamReader respBody = new InputStreamReader(http.getInputStream());
                 gson = new Gson();
                 Boolean response = gson.fromJson(respBody, Boolean.class);
@@ -139,7 +139,7 @@ public class ServerProxy {
             reqBody.close();
 
             //checking response;
-            if(http.getResponseCode() == HttpURLConnection.HTTP_OK){//checks if login successful
+            if(http.getResponseCode() == HttpURLConnection.HTTP_OK){//checks if add class successful
                 InputStreamReader respBody = new InputStreamReader(http.getInputStream());
                 gson = new Gson();
                 Boolean response = gson.fromJson(respBody, Boolean.class);
@@ -181,7 +181,7 @@ public class ServerProxy {
             reqBody.close();
 
             //checking response;
-            if(http.getResponseCode() == HttpURLConnection.HTTP_OK){//checks if login successful
+            if(http.getResponseCode() == HttpURLConnection.HTTP_OK){//checks if class retrieval was successful
                 InputStreamReader respBody = new InputStreamReader(http.getInputStream());
                 gson = new Gson();
                 ClassListWrap response = gson.fromJson(respBody, ClassListWrap.class);
@@ -226,7 +226,7 @@ public class ServerProxy {
             reqBody.close();
 
             //checking response;
-            if(http.getResponseCode() == HttpURLConnection.HTTP_OK){//checks if login successful
+            if(http.getResponseCode() == HttpURLConnection.HTTP_OK){//checks if add assignment successful
                 InputStreamReader respBody = new InputStreamReader(http.getInputStream());
                 gson = new Gson();
                 Boolean response = gson.fromJson(respBody, Boolean.class);
@@ -248,7 +248,7 @@ public class ServerProxy {
 
         Gson gson;
         try{
-            String urlStr = "http://" + host + ":8080/class/get";
+            String urlStr = "http://" + host + ":8080/assignment/get";
             System.out.println("urlStr = \'" + urlStr + "\'");
             URL url = new URL (urlStr);//sets url
 //            URL url = new URL ("https://" + ":8080/student/login");
@@ -268,7 +268,7 @@ public class ServerProxy {
             reqBody.close();
 
             //checking response;
-            if(http.getResponseCode() == HttpURLConnection.HTTP_OK){//checks if login successful
+            if(http.getResponseCode() == HttpURLConnection.HTTP_OK){//checks if assignment retrieval was successful
                 InputStreamReader respBody = new InputStreamReader(http.getInputStream());
                 gson = new Gson();
                 AssignmentListWrap response = gson.fromJson(respBody, AssignmentListWrap.class);
