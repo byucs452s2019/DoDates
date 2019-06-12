@@ -4,10 +4,9 @@ import org.junit.Test;
 
 import java.util.List;
 
-import ntheurer.dodatesapp.DAO.AssignmentDAO;
-import ntheurer.dodatesapp.model.Assignment;
+import model.Assignment;
 
-import static org.junit.Assert.*;
+import DAO.AssignmentDAO;
 
 public class AssignmentDAOTest {
 
@@ -16,7 +15,7 @@ public class AssignmentDAOTest {
         AssignmentDAO assignmentDAO = new AssignmentDAO();
 
         try{
-            assignmentDAO.addAssignment("aID", "MVP", "cID", "5/22/19", "5/21/19");
+            assignmentDAO.addAssignment("aID", "Final", "cID", "6/19/2019", "6/18/2019");
         } catch (Exception e){
             e.printStackTrace();
         }

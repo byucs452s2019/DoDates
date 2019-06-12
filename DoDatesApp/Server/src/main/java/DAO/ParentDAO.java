@@ -1,7 +1,6 @@
-package ntheurer.dodatesapp.DAO;
+package DAO;
 
 import java.sql.*;
-import java.util.*;
 
 public class ParentDAO {
 //starts the database and makes the file

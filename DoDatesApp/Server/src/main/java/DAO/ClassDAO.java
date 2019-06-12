@@ -1,9 +1,9 @@
-package ntheurer.dodatesapp.DAO;
+package DAO;
 
 import java.sql.*;
 import java.util.*;
 
-import ntheurer.dodatesapp.model.UserClass;
+import model.UserClass;
 
 
 public class ClassDAO extends ParentDAO{
@@ -53,7 +53,10 @@ public class ClassDAO extends ParentDAO{
             ResultSet rs = stmt.executeQuery(query);
             List<UserClass> allClasses = new ArrayList<UserClass>();
             while(rs.next()){
-                UserClass myClass = new UserClass(rs.getString("ClassName"), rs.getString("ColorName"));
+                String cID = rs.getString(1);
+                String className = rs.getString("ClassName");
+                String colorName = rs.getString("ColorName");
+                UserClass myClass = new UserClass(cID, className, colorName);
                 allClasses.add(myClass);
             }
             closeStatement();

@@ -1,15 +1,19 @@
 package ntheurer.dodatesapp.model;
 
-import android.util.ArrayMap;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import model.Assignment;
+import model.UserClass;
+import ntheurer.dodatesapp.ServerProxy;
 
 public class SingletonModel {
     private static SingletonModel singleton = new SingletonModel();
+    private String currUserID;
     private List<UserClass> userClassList;
     private Map<String, UserClass> userClassMap; //key = id(string), value = userClass
     private List<String> colorList;
@@ -17,8 +21,11 @@ public class SingletonModel {
     private String currClassID;
     private Map<String, List<Assignment>> assignmentByDueDateMap; //key = date, value = assignment
     private Map<String, List<Assignment>> assignmentByDoDateMap; //key = date, value = assignment
+    private ServerProxy proxy = new ServerProxy();
 
     private SingletonModel() {
+        currUserID = "ntgID"; //FIXME
+
         userClassList = new ArrayList<>();
         userClassMap = new TreeMap<>();
 
@@ -54,13 +61,45 @@ public class SingletonModel {
         SingletonModel.singleton = singleton;
     }
 
+    public String getCurrUserID() {
+        return currUserID;
+    }
+
+    public void setCurrUserID(String currUserID) {
+        this.currUserID = currUserID;
+    }
+
     public List<UserClass> getUserClassList() {
-        //TODO: Call class dao
+        //Call class dao
+        userClassList.clear();
+        userClassList = new ArrayList<>();
+        userClassList = proxy.getClasses(currUserID);
+
+        if (userClassList == null) {
+            Log.w("SingletonModel", "userClassList was null from classDAO");
+            userClassList = new ArrayList<>();
+        }
+
+        for (UserClass uc : userClassList) { //add assignments to class objects
+            List<Assignment> ucAssignments = proxy.getAssignments(uc.getUniqueID());
+            for (Assignment currAssignment : ucAssignments) { //make sure each assignment has the class in it
+                if (currAssignment.getUserClass() == null) {
+                    currAssignment.setUserClass(uc);
+                }
+            }
+            uc.setAssignments(ucAssignments);
+        }
+
         return userClassList;
     }
 
     public Map<String, UserClass> getUserClassMap() {
-        //TODO: Call class dao?
+        getUserClassList(); //will make sure the userClassList is up to date
+        userClassMap.clear();
+        userClassMap = new HashMap<>();
+        for (UserClass uc : userClassList) {
+            userClassMap.put(uc.getUniqueID(), uc);
+        }
         return userClassMap;
     }
 
@@ -73,9 +112,10 @@ public class SingletonModel {
     }
 
     public void addClass(UserClass userClass) {
-        //TODO: Call class dao (to access class table and studentclass table
-        userClassList.add(userClass);
-        userClassMap.put(userClass.getUniqueID(), userClass);
+        //Call class dao (to access class table and studentclass table
+        proxy.addClass(userClass.getUniqueID(), userClass.getClassName(), userClass.getColorString(), currUserID);
+//        userClassList.add(userClass);
+//        userClassMap.put(userClass.getUniqueID(), userClass);
     }
 
     public String getCurrClassID() {
@@ -87,16 +127,19 @@ public class SingletonModel {
     }
 
     public Map<String, List<Assignment>> getAssignmentByDueDateMap() {
+        updateAssignmentByDueDateMap();
         return assignmentByDueDateMap;
     }
 
     public Map<String, List<Assignment>> getAssignmentByDoDateMap() {
+        updateAssignmentByDoDateMap();
         return assignmentByDoDateMap;
     }
 
     public void updateAssignmentByDueDateMap() {
         assignmentByDueDateMap.clear();
         assignmentByDueDateMap = new TreeMap<>();
+        getUserClassList(); //makes sure the userClassList is up to date
         for (UserClass userClass : userClassList) {
             for (Assignment assignment : userClass.getAssignments()) {
                 if (assignmentByDueDateMap.get(assignment.getDueDate()) == null) {
@@ -107,7 +150,7 @@ public class SingletonModel {
                 else {
                     assignmentByDueDateMap.get(assignment.getDueDate()).add(assignment);
                 }
-                Log.w("SingleTonModel", "Size of assignmentByDueDateMap = " + assignmentByDueDateMap.size());
+                Log.w("SingletonModel", "Size of assignmentByDueDateMap = " + assignmentByDueDateMap.size());
             }
         }
     }
@@ -115,6 +158,7 @@ public class SingletonModel {
     public void updateAssignmentByDoDateMap() {
         assignmentByDoDateMap.clear();
         assignmentByDoDateMap = new TreeMap<>();
+        getUserClassList(); //makes sure the userClassList is up to date
         for (UserClass userClass : userClassList) {
             for (Assignment assignment : userClass.getAssignments()) {
                 if (assignmentByDoDateMap.get(assignment.getDoDate()) == null) {
@@ -125,7 +169,7 @@ public class SingletonModel {
                 else {
                     assignmentByDoDateMap.get(assignment.getDoDate()).add(assignment);
                 }
-                Log.w("SingleTonModel", "Size of assignmentByDoDateMap = " + assignmentByDoDateMap.size());
+                Log.w("SingletonModel", "Size of assignmentByDoDateMap = " + assignmentByDoDateMap.size());
             }
         }
     }
