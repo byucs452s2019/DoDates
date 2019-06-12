@@ -40,6 +40,8 @@ public class StudentsDAO extends ParentDAO {
             while (results.next()) {
                 userID = results.getString(1);
             }
+            closeStatement();
+            closeConnection(true);
             return userID;
 
         } catch (Exception e){
