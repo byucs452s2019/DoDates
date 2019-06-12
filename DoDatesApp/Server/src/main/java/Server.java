@@ -7,6 +7,7 @@ import Handlers.AddAssignmentHandler;
 import Handlers.AddClassHandler;
 import Handlers.AddStudentHandler;
 import Handlers.GetAssignmentHandler;
+import Handlers.GetClassHandler;
 import Handlers.LoginHandler;
 
 public class Server {
@@ -42,7 +43,7 @@ public class Server {
         server.createContext("/assignment/add", new AddAssignmentHandler());
         server.createContext("/assignment/get", new GetAssignmentHandler());
         server.createContext("/class/add", new AddClassHandler());
-        server.createContext("/class/get", new GetAssignmentHandler());
+        server.createContext("/class/get", new GetClassHandler());
 
         System.out.println("Starting server");
         server.start();

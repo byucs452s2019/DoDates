@@ -17,6 +17,7 @@ import java.util.Calendar;
 
 import model.Assignment;
 import ntheurer.dodatesapp.R;
+import ntheurer.dodatesapp.ServerProxy;
 import ntheurer.dodatesapp.model.SingletonModel;
 
 public class AddAssignmentActivity extends AppCompatActivity {
@@ -108,6 +109,8 @@ public class AddAssignmentActivity extends AppCompatActivity {
                 assignmentName = assignmentNameEditText.getText().toString();
                 Assignment assignment = new Assignment(assignmentName, dueDate, doDate, (sModel.getUserClassMap()).get(currClassID));
                 ((sModel.getUserClassMap()).get(currClassID)).addSingleAssignment(assignment);
+                ServerProxy proxy = new ServerProxy();
+                proxy.addAssignment(assignment.getAssignmentID(), assignmentName, assignment.getUserClass().getUniqueID(), dueDate, doDate);
                 Intent myIntent = new Intent(AddAssignmentActivity.this, ClassDetailsActivity.class);
                 AddAssignmentActivity.this.startActivity(myIntent);
             }

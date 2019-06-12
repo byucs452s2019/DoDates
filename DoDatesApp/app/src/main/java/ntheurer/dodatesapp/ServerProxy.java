@@ -98,7 +98,7 @@ public class ServerProxy {
             if(http.getResponseCode() == HttpURLConnection.HTTP_OK){//checks if login successful
                 InputStreamReader respBody = new InputStreamReader(http.getInputStream());
                 gson = new Gson();
-                String response = gson.fromJson(respBody, String.class);
+                String response = gson.fromJson(respBody, String.class); //response should be the userID
                 respBody.close();
                 http.disconnect();
                 return response;

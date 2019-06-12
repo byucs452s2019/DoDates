@@ -15,18 +15,19 @@ import DAO.StudentsDAO;
 public class LoginHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        System.out.println("in LoginHandler handle");
+        System.out.println("In LoginHandler handle");
         boolean success = false;
         StudentsDAO studentsDAO = new StudentsDAO();
         try{
             //check request type
-            if (exchange.getRequestMethod().toLowerCase().equals("post")){
+//            System.out.println("req method is " + exchange.getRequestMethod().toLowerCase());
+            if (exchange.getRequestMethod().toLowerCase().equals("post") || exchange.getRequestMethod().toLowerCase().equals("get")){
                 //get request data
                 InputStreamReader reqBody = new InputStreamReader(exchange.getRequestBody());
                 Gson gson = new Gson();
                 String user = gson.fromJson(reqBody, String.class);
                 //call service
-                String response = studentsDAO.login(user);
+                String response = studentsDAO.login(user);  //response is the userID
                 //check for non error
                 if(response != null){
                     exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);

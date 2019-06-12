@@ -24,7 +24,7 @@ public class SingletonModel {
     private ServerProxy proxy = new ServerProxy();
 
     private SingletonModel() {
-        currUserID = "ntgID2"; //FIXME
+        currUserID = "ntgID"; //FIXME
 
         userClassList = new ArrayList<>();
         userClassMap = new TreeMap<>();
@@ -59,6 +59,14 @@ public class SingletonModel {
 
     public static void setSingleton(SingletonModel singleton) {
         SingletonModel.singleton = singleton;
+    }
+
+    public String getCurrUserID() {
+        return currUserID;
+    }
+
+    public void setCurrUserID(String currUserID) {
+        this.currUserID = currUserID;
     }
 
     public List<UserClass> getUserClassList() {

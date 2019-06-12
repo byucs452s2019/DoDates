@@ -44,7 +44,7 @@ public class AssignmentDAO extends ParentDAO {
             ResultSet rs = stmt.executeQuery(query);
             List<Assignment> allAssignments = new ArrayList<Assignment>();
             while(rs.next()){
-                Assignment myAssignment = new Assignment(rs.getString("AssignmentName"), rs.getString("DueDate"), rs.getString("DoDate"));
+                Assignment myAssignment = new Assignment(rs.getString("AssignmentID"), rs.getString("AssignmentName"), rs.getString("DueDate"), rs.getString("DoDate"));
                 allAssignments.add(myAssignment);
             }
             closeStatement();

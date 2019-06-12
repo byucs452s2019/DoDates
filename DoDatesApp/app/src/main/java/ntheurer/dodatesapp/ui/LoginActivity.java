@@ -11,6 +11,7 @@ import android.view.*;
 
 import ntheurer.dodatesapp.R;
 import ntheurer.dodatesapp.ServerProxy;
+import ntheurer.dodatesapp.model.SingletonModel;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -20,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.w(tag, "onCreate: started");
         super.onCreate(savedInstanceState);
+        final SingletonModel sModel = SingletonModel.getInstance();
         setContentView(R.layout.activity_login);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -38,9 +40,12 @@ public class LoginActivity extends AppCompatActivity {
                 String password = passwordEditText.getText().toString();
                 Log.w(tag, "registerButton clicked");
                 ServerProxy proxy = new ServerProxy();
-                proxy.login(username);
-                Intent myIntent = new Intent(LoginActivity.this, CalendarActivity.class);
-                LoginActivity.this.startActivity(myIntent);
+                String userID = proxy.login(username);
+                if (userID != null) {
+                    sModel.setCurrUserID(userID);
+                    Intent myIntent = new Intent(LoginActivity.this, CalendarActivity.class);
+                    LoginActivity.this.startActivity(myIntent);
+                }
             }
         });
 
@@ -53,9 +58,12 @@ public class LoginActivity extends AppCompatActivity {
                 String password = passwordEditText.getText().toString();
                 Log.w(tag, "loginButton clicked");
                 ServerProxy proxy = new ServerProxy();
-                proxy.login(username);
-                Intent myIntent = new Intent(LoginActivity.this, CalendarActivity.class);
-                LoginActivity.this.startActivity(myIntent);
+                String userID = proxy.login(username);
+                if (userID != null) {
+                    sModel.setCurrUserID(userID);
+                    Intent myIntent = new Intent(LoginActivity.this, CalendarActivity.class);
+                    LoginActivity.this.startActivity(myIntent);
+                }
             }
         });
     }

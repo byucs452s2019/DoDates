@@ -8,18 +8,27 @@ public class UserClass {
     private String className;
     private List<Assignment> assignments;
     private String colorString;
-    private String uniqueID = UUID.randomUUID().toString();
+    private String uniqueID;
 
     public UserClass(String className, String colorString) {
         this.className = className;
         assignments = new ArrayList<>();
         this.colorString = colorString;
+        this.uniqueID = UUID.randomUUID().toString();
+    }
+
+    public UserClass(String uniqueID, String className, String colorString) {
+        this.className = className;
+        assignments = new ArrayList<>();
+        this.colorString = colorString;
+        this.uniqueID = uniqueID;
     }
 
     public UserClass(String className, List<Assignment> assignments, String colorString) {
         this.className = className;
         this.assignments = assignments;
         this.colorString = colorString;
+        uniqueID = UUID.randomUUID().toString();
         updateAssignmentUserClasses();
     }
 
@@ -61,6 +70,7 @@ public class UserClass {
     public void addSingleAssignment(Assignment assignment) {
         assignments.add(assignment);
         updateAssignmentUserClasses();
+
     }
 
     private void updateAssignmentUserClasses() {
