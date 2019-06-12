@@ -40,7 +40,8 @@ public class LoginActivity extends AppCompatActivity {
                 String password = passwordEditText.getText().toString();
                 Log.w(tag, "registerButton clicked");
                 ServerProxy proxy = new ServerProxy();
-                String userID = proxy.login(username);
+
+                String userID = proxy.addStudent(username, password);
                 if (userID != null) {
                     sModel.setCurrUserID(userID);
                     Intent myIntent = new Intent(LoginActivity.this, CalendarActivity.class);

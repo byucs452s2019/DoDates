@@ -29,7 +29,7 @@ public class ServerProxy {
         //If you changed the host value, make sure to change the value in res/xml/network_security_config.xml
     }
 
-    public boolean addStudent(String userID, String userName, String password){
+    public String addStudent(String userName, String password){
         Gson gson;
         try{
             String urlStr = "http://" + host + ":8080/student/add";
@@ -38,7 +38,7 @@ public class ServerProxy {
 //            URL url = new URL ("https://" + ":8080/student/login");
 
             gson = new GsonBuilder().setPrettyPrinting().create();//makes request body
-            StudentDumbData dumbData = new StudentDumbData(userID, userName, password);
+            StudentDumbData dumbData = new StudentDumbData(userName, password);
             String reqData = gson.toJson(dumbData);
 
 //            HttpsURLConnection https = (HttpsURLConnection)url.openConnection();
@@ -56,19 +56,19 @@ public class ServerProxy {
             if(http.getResponseCode() == HttpURLConnection.HTTP_OK){//checks if add student successful
                 InputStreamReader respBody = new InputStreamReader(http.getInputStream());
                 gson = new Gson();
-                Boolean response = gson.fromJson(respBody, Boolean.class);
+                String response = gson.fromJson(respBody, String.class);
                 respBody.close();
                 http.disconnect();
                 return response;
             }
             else{
-                return false;
+                return null;
             }
 
         }catch(IOException e) {
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
     public String login(String username) {
