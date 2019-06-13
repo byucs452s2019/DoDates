@@ -13,10 +13,14 @@ public class FileStudentDAOTest {
         String userID = "helpme1234";
         String userName = "helpme";
         String password = "password";
+        String userID2 = "thomas1234";
+        String userName2 = "thomas";
+        String password2 = "passwordt";
         FileStudentDAO FileStudentDAO = new FileStudentDAO();
 
         try {
             FileStudentDAO.addStudent(userID, userName, password);
+            FileStudentDAO.addStudent(userID2, userName2, password2);
         } catch (Exception e) {
             e.printStackTrace();
         }

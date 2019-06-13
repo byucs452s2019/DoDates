@@ -34,6 +34,5 @@ public class AssignmentDAOTest {
         } catch (Exception e){
             e.printStackTrace();
         }
-
     }
 }
