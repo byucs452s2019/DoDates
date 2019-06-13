@@ -55,7 +55,8 @@ public class FileClassDAO {
     }
 
     public List<UserClass> getClasses(String userID){
-        File folder = new File("\\DoDates CS452\\DoDates\\DoDatesApp\\Server\\classes");
+        File folder = new File("\\DoDates CS452\\DoDates\\DoDatesApp\\classes");
+
         File[] listOfFiles = folder.listFiles();
         List<UserClass> classList = new ArrayList<>();
 

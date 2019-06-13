@@ -54,7 +54,7 @@ public class FileAssignmentDAO {
     }
 
     public List<Assignment> getAssignments(String classID){
-        File folder = new File("\\DoDates CS452\\DoDates\\DoDatesApp\\Server\\assignments");
+        File folder = new File("\\DoDates CS452\\DoDates\\DoDatesApp\\assignments");
         File[] listOfFiles = folder.listFiles();
         List<Assignment> assignments = new ArrayList<>();
 

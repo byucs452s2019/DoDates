@@ -12,6 +12,7 @@ import java.net.HttpURLConnection;
 
 import DAO.AssignmentDAO;
 import DAO.ClassDAO;
+import DAO.FileAssignmentDAO;
 import DumbDataHolders.AssignmentDumbData;
 import DumbDataHolders.ClassDumbData;
 
@@ -20,7 +21,7 @@ public class AddAssignmentHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         System.out.println("In AddAssignmentHandler handle");
         boolean success = false;
-        AssignmentDAO assignmentDAO = new AssignmentDAO();
+        FileAssignmentDAO assignmentDAO = new FileAssignmentDAO();
         try{
             //check request type
 //            System.out.println("req method is " + exchange.getRequestMethod().toLowerCase());

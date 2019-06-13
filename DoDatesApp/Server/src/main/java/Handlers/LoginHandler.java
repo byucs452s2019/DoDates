@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 
+import DAO.FileStudentDAO;
 import DAO.StudentsDAO;
 
 public class LoginHandler implements HttpHandler {
@@ -17,7 +18,7 @@ public class LoginHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         System.out.println("In LoginHandler handle");
         boolean success = false;
-        StudentsDAO studentsDAO = new StudentsDAO();
+        FileStudentDAO studentsDAO = new FileStudentDAO();
         try{
             //check request type
 //            System.out.println("req method is " + exchange.getRequestMethod().toLowerCase());

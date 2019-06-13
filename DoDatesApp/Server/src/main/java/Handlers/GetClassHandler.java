@@ -12,6 +12,7 @@ import java.net.HttpURLConnection;
 import java.util.List;
 
 import DAO.ClassDAO;
+import DAO.FileClassDAO;
 import DAO.StudentsDAO;
 import DumbDataHolders.ClassListWrap;
 import model.UserClass;
@@ -21,7 +22,7 @@ public class GetClassHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         System.out.println("In GetClassHandler handle");
         boolean success = false;
-        ClassDAO classDAO = new ClassDAO();
+        FileClassDAO classDAO = new FileClassDAO();
         try{
             //check request type
 //            System.out.println("req method is " + exchange.getRequestMethod().toLowerCase());
