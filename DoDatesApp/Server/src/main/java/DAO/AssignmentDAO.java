@@ -59,6 +59,25 @@ public class AssignmentDAO extends ParentDAO {
         }
     }
 
+    public boolean removeAssignment(String assignmentID, String classID) {
+        openConnection();
+        try {
+            stmt = connection.createStatement();
+
+            String removeAssignments = "DELETE FROM Assignments WHERE AssignmentID = \'" + assignmentID + "\';";
+            stmt.executeUpdate(removeAssignments);
+
+            closeStatement();
+            closeConnection(true);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            closeStatement();
+            closeConnection(false);
+            return false;
+        }
+    }
+
 
     private void closeStatement() {
         try {

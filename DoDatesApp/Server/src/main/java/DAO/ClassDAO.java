@@ -71,6 +71,33 @@ public class ClassDAO extends ParentDAO{
         }
     }
 
+    public boolean removeClass(String classID) {
+        openConnection();
+        try {
+            stmt = connection.createStatement();
+
+            String removeAssignments = "DELETE FROM Assignments WHERE ClassID = \'" + classID + "\';";
+            String removeFromStudentClasses= "DELETE FROM StudentClasses WHERE ClassID = \'" + classID + "\';";
+            String removeFromClassTable = "DELETE FROM Classes WHERE ClassID = \'" + classID + "\';";
+
+            AssignmentDAO assignmentDAO = new AssignmentDAO();
+            if (assignmentDAO.getAssignments(classID).size() > 0) {
+                stmt.executeUpdate(removeAssignments);
+            }
+            stmt.executeUpdate(removeFromStudentClasses);
+            stmt.executeUpdate(removeFromClassTable);
+
+            closeStatement();
+            closeConnection(true);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            closeStatement();
+            closeConnection(false);
+            return false;
+        }
+    }
+
     private void closeStatement() {
         try {
             if (stmt != null) {

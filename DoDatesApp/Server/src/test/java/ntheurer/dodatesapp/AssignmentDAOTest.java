@@ -8,6 +8,9 @@ import model.Assignment;
 
 import DAO.AssignmentDAO;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 public class AssignmentDAOTest {
 
     @Test
@@ -22,18 +25,38 @@ public class AssignmentDAOTest {
     }
     @Test
     public void getAssignments(){
-        AssignmentDAO classDAO = new AssignmentDAO();
+        AssignmentDAO assignmentDAO = new AssignmentDAO();
 
         try{
-//            classDAO.addClass("cID", "CS452", "blue", "ntgID2");
-//            classDAO.addClass("cID2", "CS142", "green", "ntgID2");
-//            classDAO.addClass("cID3", "CS500", "red", "ntgID3");
-            List<Assignment> myAssignments = classDAO.getAssignments("cID");
+//            classDAO.addClass("cID", "CS452", "blue", "ntgID");
+//            classDAO.addClass("cID2", "CS142", "green", "ntgID");
+            List<Assignment> myAssignments = assignmentDAO.getAssignments("cID");
             System.out.println(myAssignments.size());
+            for (Assignment a : myAssignments) {
+                System.out.println(a.getAssignmentID() + ": " + a.getAssignmentName());
+            }
+
+            int expectedNumAssignments = 0;
+            assertEquals(expectedNumAssignments, myAssignments.size());
 
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
 
+    @Test
+    public void removeAssignments() {
+        AssignmentDAO assignmentDAO = new AssignmentDAO();
+
+        try {
+            assignmentDAO.removeAssignment("aID", "classThatDoesntExist");
+            assignmentDAO.removeAssignment("aID", "cID");
+
+            int expectedNumAssignments = 0;
+            assertEquals(expectedNumAssignments, assignmentDAO.getAssignments("cID").size());
+        } catch (Exception e) {
+            e.printStackTrace();
+            assertTrue(false);
+        }
     }
 }
