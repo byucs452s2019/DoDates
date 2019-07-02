@@ -157,6 +157,91 @@ public class ServerProxy {
         return false;
     }
 
+    public boolean updateClass(String classID, String className, String colorName, String userID) {
+
+        Gson gson;
+        try{
+            String urlStr = "http://" + host + ":8080/class/update";
+            System.out.println("urlStr = \'" + urlStr + "\'");
+            URL url = new URL (urlStr);//sets url
+//            URL url = new URL ("https://" + ":8080/student/login");
+
+            gson = new GsonBuilder().setPrettyPrinting().create();//makes request body
+            ClassDumbData dumbData = new ClassDumbData(classID, className, colorName, userID);
+            String reqData = gson.toJson(dumbData);
+
+//            HttpsURLConnection https = (HttpsURLConnection)url.openConnection();
+            HttpURLConnection http = (HttpURLConnection)url.openConnection();//set GET/POST
+            http.setRequestMethod("POST");
+            http.setDoOutput(true);
+            http.connect();//sends request
+
+            OutputStreamWriter reqBody = new OutputStreamWriter(http.getOutputStream());
+            reqBody.write(reqData);
+            reqBody.flush();
+            reqBody.close();
+
+            //checking response;
+            if(http.getResponseCode() == HttpURLConnection.HTTP_OK){//checks if add class successful
+                InputStreamReader respBody = new InputStreamReader(http.getInputStream());
+                gson = new Gson();
+                Boolean response = gson.fromJson(respBody, Boolean.class);
+                respBody.close();
+                http.disconnect();
+                return response;
+            }
+            else{
+                return false;
+            }
+
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteClass(String classID){
+
+        Gson gson;
+        try{
+            String urlStr = "http://" + host + ":8080/class/delete";
+            System.out.println("urlStr = \'" + urlStr + "\'");
+            URL url = new URL (urlStr);//sets url
+//            URL url = new URL ("https://" + ":8080/student/login");
+
+            gson = new GsonBuilder().setPrettyPrinting().create();//makes request body
+            String reqData = gson.toJson(classID);
+
+//            HttpsURLConnection https = (HttpsURLConnection)url.openConnection();
+            HttpURLConnection http = (HttpURLConnection)url.openConnection();//set GET/POST
+            http.setRequestMethod("POST");
+            http.setDoOutput(true);
+            http.connect();//sends request
+
+            OutputStreamWriter reqBody = new OutputStreamWriter(http.getOutputStream());
+            reqBody.write(reqData);
+            reqBody.flush();
+            reqBody.close();
+
+            //checking response;
+            if(http.getResponseCode() == HttpURLConnection.HTTP_OK){//checks if add class successful
+                InputStreamReader respBody = new InputStreamReader(http.getInputStream());
+                gson = new Gson();
+                Boolean response = gson.fromJson(respBody, Boolean.class);
+                respBody.close();
+                http.disconnect();
+                return response;
+            }
+            else{
+                return false;
+            }
+
+        }catch(IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public List<UserClass> getClasses(String userID){
 
         Gson gson;

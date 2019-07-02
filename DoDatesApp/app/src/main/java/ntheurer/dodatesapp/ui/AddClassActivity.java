@@ -1,6 +1,9 @@
 package ntheurer.dodatesapp.ui;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +26,8 @@ public class AddClassActivity extends AppCompatActivity {
     private final String tag = "AddClassActivity";
     private String colorSelection;
     private String className;
+    private boolean confirmDelete;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +58,80 @@ public class AddClassActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
+        Button deleteButton = (Button) findViewById(R.id.delete_class_button);
+        if (sModel.isEditingClass()) {
+            UserClass currClass = (sModel.getUserClassMap()).get(sModel.getCurrClassID());
+            if (currClass != null) {
+                classNameEditText.setText(currClass.getClassName());
+                colorSpinner.setSelection(colorList.indexOf(currClass.getColorString()));
+                colorSelection = currClass.getColorString();
+                deleteButton.setVisibility(View.VISIBLE);
+            }
+        }
+
+        context = this;
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.w(tag, "deleteButton clicked");
+                className = classNameEditText.getText().toString();
+                //FIXME: add confirm delete
+
+                confirmDelete = false;
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setCancelable(true);
+                builder.setTitle("Are you sure you want to delete this class?");
+                builder.setMessage("All assignments and class information will also be deleted.");
+                builder.setPositiveButton("Confirm",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                confirmDelete = true;
+                                if (sModel.isEditingClass() && sModel.getCurrClassID() != null) {
+                                    if (!sModel.deleteClass(sModel.getCurrClassID())) {
+                                        //FIXME: error message
+                                    } else {
+                                        sModel.setEditingClass(false);
+                                        Intent myIntent = new Intent(AddClassActivity.this, ClassListActivity.class);
+                                        AddClassActivity.this.startActivity(myIntent);
+                                    }
+                                }
+                            }
+                        });
+                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        confirmDelete = false;
+                        dialog.cancel();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+//                if (sModel.isEditingClass() && sModel.getCurrClassID() != null) {
+//                    if (!sModel.deleteClass(sModel.getCurrClassID())) {
+//                        //FIXME: error message
+//                    }
+//                    sModel.setEditingClass(false);
+//                    Intent myIntent = new Intent(AddClassActivity.this, ClassListActivity.class);
+//                    AddClassActivity.this.startActivity(myIntent);
+//                }
+            }
+        });
+
         Button confirmButton = (Button) findViewById(R.id.createClassButton);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.w(tag, "confirmButton clicked");
                 className = classNameEditText.getText().toString();
-                sModel.addClass(new UserClass(className, colorSelection));
+                if (sModel.isEditingClass()) {
+                    sModel.updateClass(className, colorSelection);
+                    sModel.setEditingClass(false);
+                } else {
+                    sModel.addClass(new UserClass(className, colorSelection));
+                }
                 Intent myIntent = new Intent(AddClassActivity.this, ClassListActivity.class);
                 AddClassActivity.this.startActivity(myIntent);
             }
@@ -70,6 +142,7 @@ public class AddClassActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.w(tag, "cancelCreateButtion clocked");
+                sModel.setEditingClass(false);
                 Intent myIntent = new Intent(AddClassActivity.this, ClassListActivity.class);
                 AddClassActivity.this.startActivity(myIntent);
             }

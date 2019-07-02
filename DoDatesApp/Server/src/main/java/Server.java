@@ -6,9 +6,11 @@ import java.net.InetSocketAddress;
 import Handlers.AddAssignmentHandler;
 import Handlers.AddClassHandler;
 import Handlers.AddStudentHandler;
+import Handlers.DeleteClassHandler;
 import Handlers.GetAssignmentHandler;
 import Handlers.GetClassHandler;
 import Handlers.LoginHandler;
+import Handlers.UpdateClassHandler;
 
 public class Server {
 
@@ -43,6 +45,8 @@ public class Server {
         server.createContext("/assignment/add", new AddAssignmentHandler());
         server.createContext("/assignment/get", new GetAssignmentHandler());
         server.createContext("/class/add", new AddClassHandler());
+        server.createContext("/class/update", new UpdateClassHandler());
+        server.createContext("/class/delete", new DeleteClassHandler());
         server.createContext("/class/get", new GetClassHandler());
 
         System.out.println("Starting server");

@@ -19,6 +19,7 @@ public class SingletonModel {
     private List<String> colorList;
     private Map<String, String> colorMap;
     private String currClassID;
+    private boolean editingClass;
     private Map<String, List<Assignment>> assignmentByDueDateMap; //key = date, value = assignment
     private Map<String, List<Assignment>> assignmentByDoDateMap; //key = date, value = assignment
     private ServerProxy proxy = new ServerProxy();
@@ -44,6 +45,7 @@ public class SingletonModel {
         colorMap.put("purple", "#8638CA");
 
         currClassID = null;
+        editingClass = false;
 
         assignmentByDueDateMap = new TreeMap<>();
         assignmentByDoDateMap = new TreeMap<>();
@@ -118,12 +120,28 @@ public class SingletonModel {
 //        userClassMap.put(userClass.getUniqueID(), userClass);
     }
 
+    public void updateClass(String className, String colorStr) {
+        proxy.updateClass(currClassID, className, colorStr, currUserID);
+    }
+
+    public boolean deleteClass(String classID) {
+        return proxy.deleteClass(classID);
+    }
+
     public String getCurrClassID() {
         return currClassID;
     }
 
     public void setCurrClassID(String currClassID) {
         this.currClassID = currClassID;
+    }
+
+    public boolean isEditingClass() {
+        return editingClass;
+    }
+
+    public void setEditingClass(boolean editingClass) {
+        this.editingClass = editingClass;
     }
 
     public Map<String, List<Assignment>> getAssignmentByDueDateMap() {

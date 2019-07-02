@@ -40,6 +40,28 @@ public class ClassDAO extends ParentDAO{
         }
     }
 
+    public boolean updateClass (String classID, String className, String colorName) {
+        openConnection();
+        try{
+            stmt = connection.createStatement();
+
+            String updateStatement= "UPDATE Classes\n" +
+                    "SET ClassName = '" + className + "', ColorName = '" + colorName + "'\n" +
+                    "WHERE ClassID = '" + classID + "';";
+
+            stmt.executeUpdate(updateStatement);
+
+            closeStatement();
+            closeConnection(true);
+            return true;
+        } catch(Exception e){
+            e.printStackTrace();
+            closeStatement();
+            closeConnection(false);
+            return false;
+        }
+    }
+
     public List<UserClass> getClasses(String userID){
         openConnection();
         try{

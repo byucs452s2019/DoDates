@@ -109,7 +109,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/create"
+            android:text="@string/save"
             android:id="@+id/create_assignment_button"
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="50dp"

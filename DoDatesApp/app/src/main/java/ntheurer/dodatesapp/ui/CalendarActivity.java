@@ -170,7 +170,7 @@ public class CalendarActivity extends AppCompatActivity {
                 else {
                     Log.w(tag, "class color is " + classColor);
                 }
-                assignmentNameTextView.setTextColor(Color.parseColor(sModel.getColorMap().get(classColor)));;
+                assignmentNameTextView.setTextColor(Color.parseColor(sModel.getColorMap().get(classColor)));
                 dueDate = dueDate + currAssignment.getDueDate();
                 Log.w(tag, "dueDate = \"" + dueDate + "\"");
                 assignmentDueDateTextView.setText(dueDate);

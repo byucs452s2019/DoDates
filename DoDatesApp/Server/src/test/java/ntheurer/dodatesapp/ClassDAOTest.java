@@ -9,6 +9,7 @@ import DAO.ClassDAO;
 import model.UserClass;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ClassDAOTest {
 
@@ -36,7 +37,7 @@ public class ClassDAOTest {
             List<UserClass> myClasses = classDAO.getClasses("ntgID");
             System.out.println(myClasses.size());
             for (UserClass c : myClasses) {
-                System.out.println(c.getUniqueID());
+                System.out.println(c.getUniqueID() + ": " + c.getClassName());
             }
 
             int expectedNumClasses = 2;
@@ -46,6 +47,27 @@ public class ClassDAOTest {
             e.printStackTrace();
         }
 
+    }
+
+    @Test
+    public void updateClass() {
+        ClassDAO classDAO = new ClassDAO();
+
+        try {
+            classDAO.updateClass("cID", "blue nOw", "blue");
+
+            List<UserClass> myClasses = classDAO.getClasses("ntgID");
+            System.out.println(myClasses.size());
+            for (UserClass c : myClasses) {
+                System.out.println(c.getUniqueID() + ": " + c.getClassName() + ", " + c.getColorString());
+            }
+
+            assertTrue(true);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            assertTrue(false);
+        }
     }
 
     @Test

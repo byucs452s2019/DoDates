@@ -2,6 +2,7 @@ package ntheurer.dodatesapp.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import model.Assignment;
+import model.UserClass;
 import ntheurer.dodatesapp.R;
 import ntheurer.dodatesapp.model.SingletonModel;
 
@@ -30,13 +32,16 @@ public class ClassDetailsActivity extends AppCompatActivity {
         RecyclerView recyclerView;
         RecyclerView.Adapter adapter;
         RecyclerView.LayoutManager layoutManager;
-        SingletonModel sModel = SingletonModel.getInstance();
+        final SingletonModel sModel = SingletonModel.getInstance();
         String currClassID = sModel.getCurrClassID();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_details);
 
-        this.setTitle(((sModel.getUserClassMap()).get(currClassID)).getClassName());
+        UserClass currClass = (sModel.getUserClassMap()).get(currClassID);
+        this.setTitle(currClass.getClassName());
+        TextView assignmentHeader = (TextView) findViewById(R.id.assignment_list_header);
+        assignmentHeader.setTextColor(Color.parseColor(sModel.getColorMap().get(currClass.getColorString())));
 
         context = this;
         recyclerView = (RecyclerView) findViewById(R.id.assignment_recycler_view);
@@ -51,6 +56,17 @@ public class ClassDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.w(tag, "viewClassListButton clicked");
                 Intent myIntent = new Intent(ClassDetailsActivity.this, ClassListActivity.class);
+                ClassDetailsActivity.this.startActivity(myIntent);
+            }
+        });
+
+        Button editClassInfoButton = (Button) findViewById(R.id.edit_class_info_button);
+        editClassInfoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.w(tag, "editClassInfoButton clicked");
+                sModel.setEditingClass(true);
+                Intent myIntent = new Intent(ClassDetailsActivity.this, AddClassActivity.class);
                 ClassDetailsActivity.this.startActivity(myIntent);
             }
         });
