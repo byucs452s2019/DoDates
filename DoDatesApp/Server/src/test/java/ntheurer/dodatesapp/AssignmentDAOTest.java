@@ -19,8 +19,10 @@ public class AssignmentDAOTest {
 
         try{
             assignmentDAO.addAssignment("aID", "Final", "cID", "6/19/2019", "6/18/2019");
+            assertTrue(true);
         } catch (Exception e){
             e.printStackTrace();
+            assertTrue(false);
         }
     }
     @Test
@@ -36,7 +38,7 @@ public class AssignmentDAOTest {
                 System.out.println(a.getAssignmentID() + ": " + a.getAssignmentName());
             }
 
-            int expectedNumAssignments = 0;
+            int expectedNumAssignments = 1;
             assertEquals(expectedNumAssignments, myAssignments.size());
 
         } catch (Exception e){
@@ -52,6 +54,20 @@ public class AssignmentDAOTest {
             assignmentDAO.removeAssignment("aID"); //cID
 
             int expectedNumAssignments = 0;
+            assertEquals(expectedNumAssignments, assignmentDAO.getAssignments("cID").size());
+        } catch (Exception e) {
+            e.printStackTrace();
+            assertTrue(false);
+        }
+    }
+
+    @Test
+    public void updateAssignments() {
+        AssignmentDAO assignmentDAO = new AssignmentDAO();
+
+        try {
+            assignmentDAO.updateAssignment("aID", "new Assignment name", "7/19/2019", "7/18/2019");
+            int expectedNumAssignments = 1;
             assertEquals(expectedNumAssignments, assignmentDAO.getAssignments("cID").size());
         } catch (Exception e) {
             e.printStackTrace();

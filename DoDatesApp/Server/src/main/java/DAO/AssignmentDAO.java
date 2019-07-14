@@ -32,6 +32,29 @@ public class AssignmentDAO extends ParentDAO {
         }
     }
 
+    public boolean updateAssignment(String assignmentID, String AssignmentName, String DueDate, String DoDate) {
+        openConnection();
+        try {
+            stmt = connection.createStatement();
+
+            stmt.executeUpdate("UPDATE Assignments\n" +
+                    "SET \n" +
+                    "\tAssignmentName = '" + AssignmentName + "',\n" +
+                    "\tDueDate = '" + DueDate + "',\n" +
+                    "\tDoDate = '" + DoDate + "'\n" +
+                    "WHERE AssignmentID = '" + assignmentID + "';");
+
+            closeStatement();
+            closeConnection(true);
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            closeStatement();
+            closeConnection(false);
+            return false;
+        }
+    }
+
     public List<Assignment> getAssignments(String classID){
         openConnection();
         try{

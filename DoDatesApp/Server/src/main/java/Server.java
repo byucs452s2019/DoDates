@@ -11,6 +11,7 @@ import Handlers.DeleteClassHandler;
 import Handlers.GetAssignmentHandler;
 import Handlers.GetClassHandler;
 import Handlers.LoginHandler;
+import Handlers.UpdateAssignmentHandler;
 import Handlers.UpdateClassHandler;
 
 public class Server {
@@ -44,6 +45,7 @@ public class Server {
         server.createContext("/student/add", new AddStudentHandler());
         server.createContext("/student/login", new LoginHandler());
         server.createContext("/assignment/add", new AddAssignmentHandler());
+        server.createContext("/assignment/update", new UpdateAssignmentHandler());
         server.createContext("/assignment/delete", new DeleteAssignmentHandler());
         server.createContext("/assignment/get", new GetAssignmentHandler());
         server.createContext("/class/add", new AddClassHandler());
