@@ -20,6 +20,8 @@ public class SingletonModel {
     private Map<String, String> colorMap;
     private String currClassID;
     private boolean editingClass;
+    private Assignment currAssignment;
+    private boolean editingAssignment;
     private Map<String, List<Assignment>> assignmentByDueDateMap; //key = date, value = assignment
     private Map<String, List<Assignment>> assignmentByDoDateMap; //key = date, value = assignment
     private ServerProxy proxy = new ServerProxy();
@@ -46,6 +48,7 @@ public class SingletonModel {
 
         currClassID = null;
         editingClass = false;
+        editingAssignment = false;
 
         assignmentByDueDateMap = new TreeMap<>();
         assignmentByDoDateMap = new TreeMap<>();
@@ -116,16 +119,55 @@ public class SingletonModel {
     public void addClass(UserClass userClass) {
         //Call class dao (to access class table and studentclass table
         proxy.addClass(userClass.getUniqueID(), userClass.getClassName(), userClass.getColorString(), currUserID);
-//        userClassList.add(userClass);
-//        userClassMap.put(userClass.getUniqueID(), userClass);
+        userClassList.add(userClass);
+        userClassMap.put(userClass.getUniqueID(), userClass);
+    }
+
+    public void addAssignment(Assignment assignment) {
+        userClassMap.get(currClassID).addSingleAssignment(assignment);
+        proxy.addAssignment(assignment.getAssignmentID(), assignment.getAssignmentName(), assignment.getUserClass().getUniqueID(), assignment.getDueDate(), assignment.getDoDate());
     }
 
     public void updateClass(String className, String colorStr) {
         proxy.updateClass(currClassID, className, colorStr, currUserID);
+        userClassMap.get(currClassID).setClassName(className);
+        userClassMap.get(currClassID).setColorString(colorStr);
+        for (UserClass uc : userClassList) {
+            if (currClassID.equals(uc.getUniqueID())) {
+                uc.setClassName(className);
+                uc.setColorString(colorStr);
+            }
+        }
+    }
+
+    public void updateAssignment(String classID, String assignmentID, String assignmentName, String dueDate, String doDate) {
+        //new Assignment(assignmentID, assignmentName, dueDate, doDate); + userClass
+        proxy.updateAssignment(assignmentID, assignmentName, classID, dueDate, doDate);
+        for (Assignment a : userClassMap.get(classID).getAssignments()) {
+            if (assignmentID.equals(a.getAssignmentID())) {
+                a.setAssignmentName(assignmentName);
+                a.setDueDate(dueDate);
+                a.setDoDate(doDate);
+            }
+        }
+
+        for (UserClass uc : userClassList) {
+            if (classID.equals(uc.getUniqueID())) {
+                for (Assignment a : uc.getAssignments()) {
+                    a.setAssignmentName(assignmentName);
+                    a.setDueDate(dueDate);
+                    a.setDoDate(doDate);
+                }
+            }
+        }
     }
 
     public boolean deleteClass(String classID) {
         return proxy.deleteClass(classID);
+    }
+
+    public boolean deleteAssignment(String assignmentID) {
+        return proxy.deleteAssignment(assignmentID);
     }
 
     public String getCurrClassID() {
@@ -142,6 +184,22 @@ public class SingletonModel {
 
     public void setEditingClass(boolean editingClass) {
         this.editingClass = editingClass;
+    }
+
+    public Assignment getCurrAssignment() {
+        return currAssignment;
+    }
+
+    public void setCurrAssignment(Assignment currAssignment) {
+        this.currAssignment = currAssignment;
+    }
+
+    public boolean isEditingAssignment() {
+        return editingAssignment;
+    }
+
+    public void setEditingAssignment(boolean editingAssignment) {
+        this.editingAssignment = editingAssignment;
     }
 
     public Map<String, List<Assignment>> getAssignmentByDueDateMap() {

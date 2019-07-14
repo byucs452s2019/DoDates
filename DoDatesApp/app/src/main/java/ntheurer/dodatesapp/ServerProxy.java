@@ -286,7 +286,7 @@ public class ServerProxy {
 
     }
 
-    public boolean addAssignment(String assignmentID, String AssignmentName, String ClassID, String DueDate, String DoDate) {
+    public boolean addAssignment(String assignmentID, String assignmentName, String classID, String dueDate, String doDate) {
 
         Gson gson;
         try{
@@ -296,7 +296,7 @@ public class ServerProxy {
 //            URL url = new URL ("https://" + ":8080/student/login");
 
             gson = new GsonBuilder().setPrettyPrinting().create();//makes request body
-            AssignmentDumbData dumbData = new AssignmentDumbData(assignmentID, AssignmentName, ClassID, DueDate, DoDate);
+            AssignmentDumbData dumbData = new AssignmentDumbData(assignmentID, assignmentName, classID, dueDate, doDate);
             String reqData = gson.toJson(dumbData);
 
 //            HttpsURLConnection https = (HttpsURLConnection)url.openConnection();
@@ -371,4 +371,50 @@ public class ServerProxy {
 
         return null;
     }
+
+    public boolean updateAssignment(String assignmentID, String assignmentName, String classID, String dueDate, String doDate) {
+        return true;
+    }
+
+    public boolean deleteAssignment(String assignmentID) {
+        Gson gson;
+        try{
+            String urlStr = "http://" + host + ":8080/assignment/delete";
+            System.out.println("urlStr = \'" + urlStr + "\'");
+            URL url = new URL (urlStr);//sets url
+//            URL url = new URL ("https://" + ":8080/student/login");
+
+            gson = new GsonBuilder().setPrettyPrinting().create();//makes request body
+            String reqData = gson.toJson(assignmentID);
+
+//            HttpsURLConnection https = (HttpsURLConnection)url.openConnection();
+            HttpURLConnection http = (HttpURLConnection)url.openConnection();//set GET/POST
+            http.setRequestMethod("POST");
+            http.setDoOutput(true);
+            http.connect();//sends request
+
+            OutputStreamWriter reqBody = new OutputStreamWriter(http.getOutputStream());
+            reqBody.write(reqData);
+            reqBody.flush();
+            reqBody.close();
+
+            //checking response;
+            if(http.getResponseCode() == HttpURLConnection.HTTP_OK){//checks if add class successful
+                InputStreamReader respBody = new InputStreamReader(http.getInputStream());
+                gson = new Gson();
+                Boolean response = gson.fromJson(respBody, Boolean.class);
+                respBody.close();
+                http.disconnect();
+                return response;
+            }
+            else{
+                return false;
+            }
+
+        }catch(IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

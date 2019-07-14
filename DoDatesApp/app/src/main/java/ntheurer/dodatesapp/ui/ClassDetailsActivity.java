@@ -103,8 +103,8 @@ public class ClassDetailsActivity extends AppCompatActivity {
             assignmentDueDateTextView = (TextView) itemView.findViewById(R.id.recycler_assignment_due_date);
         }
 
-        public void bind(Assignment currAssignment) {
-            SingletonModel sModel = SingletonModel.getInstance();
+        public void bind(final Assignment currAssignment) {
+            final SingletonModel sModel = SingletonModel.getInstance();
             String dueDate = "Due: ";
 
             if (assignmentNameTextView == null) {
@@ -120,6 +120,23 @@ public class ClassDetailsActivity extends AppCompatActivity {
                 dueDate = dueDate + currAssignment.getDueDate();
                 Log.w(tag, "dueDate = \"" + dueDate + "\"");
                 assignmentDueDateTextView.setText(dueDate);
+                assignmentNameTextView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        sModel.setCurrAssignment(currAssignment);
+                        sModel.setEditingAssignment(true);
+                        Intent myIntent = new Intent(ClassDetailsActivity.this, AddAssignmentActivity.class);
+                        ClassDetailsActivity.this.startActivity(myIntent);
+                    }
+                });
+                assignmentDueDateTextView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        sModel.setCurrAssignment(currAssignment);
+                        Intent myIntent = new Intent(ClassDetailsActivity.this, AddAssignmentActivity.class);
+                        ClassDetailsActivity.this.startActivity(myIntent);
+                    }
+                });
             } catch (Exception e) {
                 e.printStackTrace();
             }

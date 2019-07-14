@@ -58,7 +58,7 @@ public class UpdateClassHandler implements HttpHandler {
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
                 OutputStreamWriter respBody = new OutputStreamWriter(exchange.getResponseBody());
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                String jsonStr = gson.toJson("login in failed");
+                String jsonStr = gson.toJson("update class failed");
                 respBody.write(jsonStr);
                 respBody.flush();
                 respBody.close();

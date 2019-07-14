@@ -75,13 +75,12 @@ public class AddClassActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.w(tag, "deleteButton clicked");
                 className = classNameEditText.getText().toString();
-                //FIXME: add confirm delete
 
                 confirmDelete = false;
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setCancelable(true);
                 builder.setTitle("Are you sure you want to delete this class?");
-                builder.setMessage("All assignments and class information will also be deleted.");
+                builder.setMessage("All assignments and class information will be deleted.");
                 builder.setPositiveButton("Confirm",
                         new DialogInterface.OnClickListener() {
                             @Override

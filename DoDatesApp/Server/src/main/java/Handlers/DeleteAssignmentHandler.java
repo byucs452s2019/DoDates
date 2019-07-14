@@ -9,19 +9,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.util.List;
 
+import DAO.AssignmentDAO;
 import DAO.ClassDAO;
-import DAO.StudentsDAO;
-import DumbDataHolders.ClassListWrap;
-import model.UserClass;
 
-public class GetClassHandler implements HttpHandler {
+public class DeleteAssignmentHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        System.out.println("In GetClassHandler handle");
+        System.out.println("In DeleteAssignmentHandler handle");
         boolean success = false;
-        ClassDAO classDAO = new ClassDAO();
+        AssignmentDAO assignmentDAO = new AssignmentDAO();
         try{
             //check request type
 //            System.out.println("req method is " + exchange.getRequestMethod().toLowerCase());
@@ -29,10 +26,9 @@ public class GetClassHandler implements HttpHandler {
                 //get request data
                 InputStreamReader reqBody = new InputStreamReader(exchange.getRequestBody());
                 Gson gson = new Gson();
-                String userID = gson.fromJson(reqBody, String.class);
+                String assignmentID = gson.fromJson(reqBody, String.class);
                 //call service
-                List<UserClass> classList = classDAO.getClasses(userID);
-                ClassListWrap response = new ClassListWrap(classList);
+                Boolean response = assignmentDAO.removeAssignment(assignmentID);
                 //check for non error
                 if(response != null){
                     exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
@@ -62,7 +58,7 @@ public class GetClassHandler implements HttpHandler {
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
                 OutputStreamWriter respBody = new OutputStreamWriter(exchange.getResponseBody());
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                String jsonStr = gson.toJson("get class failed");
+                String jsonStr = gson.toJson("delete assignment failed");
                 respBody.write(jsonStr);
                 respBody.flush();
                 respBody.close();

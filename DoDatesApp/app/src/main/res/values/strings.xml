@@ -29,4 +29,5 @@
     <string name="edit_class_info">Edit Class Info</string>
     <string name="update">Update</string>
     <string name="delete_class">Delete Class</string>
+    <string name="delete_assignment">Delete Assignment</string>
 </resources>

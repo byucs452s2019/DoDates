@@ -49,8 +49,7 @@ public class AssignmentDAOTest {
         AssignmentDAO assignmentDAO = new AssignmentDAO();
 
         try {
-            assignmentDAO.removeAssignment("aID", "classThatDoesntExist");
-            assignmentDAO.removeAssignment("aID", "cID");
+            assignmentDAO.removeAssignment("aID"); //cID
 
             int expectedNumAssignments = 0;
             assertEquals(expectedNumAssignments, assignmentDAO.getAssignments("cID").size());

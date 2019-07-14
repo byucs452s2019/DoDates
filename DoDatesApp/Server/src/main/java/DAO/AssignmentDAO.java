@@ -59,7 +59,7 @@ public class AssignmentDAO extends ParentDAO {
         }
     }
 
-    public boolean removeAssignment(String assignmentID, String classID) {
+    public boolean removeAssignment(String assignmentID) {
         openConnection();
         try {
             stmt = connection.createStatement();

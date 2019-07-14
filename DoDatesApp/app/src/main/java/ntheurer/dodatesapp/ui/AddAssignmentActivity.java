@@ -1,9 +1,12 @@
 package ntheurer.dodatesapp.ui;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +33,8 @@ public class AddAssignmentActivity extends AppCompatActivity {
     private TextView displayDoDateTextView;
     private DatePickerDialog.OnDateSetListener dueDateSetListener;
     private DatePickerDialog.OnDateSetListener doDateSetListener;
+    private Context context;
+    private boolean confirmDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +105,60 @@ public class AddAssignmentActivity extends AppCompatActivity {
             }
         });
 
+        Button deleteButton = (Button) findViewById(R.id.delete_assignment_button);
+        if (sModel.isEditingAssignment()) {
+            Assignment currAssignment = sModel.getCurrAssignment();
+            if (currAssignment != null) {
+                assignmentNameEditText.setText(currAssignment.getAssignmentName());
+                dueDate = currAssignment.getDueDate();
+                displayDueDateTextView.setText(dueDate);
+                doDate = currAssignment.getDoDate();
+                displayDoDateTextView.setText(doDate);
+                deleteButton.setVisibility(View.VISIBLE);
+            }
+        }
+
+        context = this;
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.w(tag, "deleteButton clicked");
+                assignmentName = assignmentNameEditText.getText().toString();
+
+                confirmDelete = false;
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setCancelable(true);
+                builder.setTitle("Are you sure you want to delete this assignment?");
+                builder.setMessage("This action cannot be undone.");
+                builder.setPositiveButton("Confirm",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                confirmDelete = true;
+                                if (sModel.isEditingAssignment() && sModel.getCurrAssignment() != null) {
+                                    if (!sModel.deleteAssignment(sModel.getCurrAssignment().getAssignmentID())) {
+                                        //FIXME: error message
+                                    } else {
+                                        sModel.setEditingAssignment(false);
+                                        Intent myIntent = new Intent(AddAssignmentActivity.this, ClassDetailsActivity.class);
+                                        AddAssignmentActivity.this.startActivity(myIntent);
+                                    }
+                                }
+                            }
+                        });
+                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        confirmDelete = false;
+                        dialog.cancel();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+
         Button confirmButton = (Button) findViewById(R.id.create_assignment_button);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,10 +166,15 @@ public class AddAssignmentActivity extends AppCompatActivity {
                 Log.w(tag, "confirmButton clicked");
                 String currClassID = sModel.getCurrClassID();
                 assignmentName = assignmentNameEditText.getText().toString();
-                Assignment assignment = new Assignment(assignmentName, dueDate, doDate, (sModel.getUserClassMap()).get(currClassID));
-                ((sModel.getUserClassMap()).get(currClassID)).addSingleAssignment(assignment);
-                ServerProxy proxy = new ServerProxy();
-                proxy.addAssignment(assignment.getAssignmentID(), assignmentName, assignment.getUserClass().getUniqueID(), dueDate, doDate);
+                if (sModel.isEditingAssignment()) {
+                    String assignmentID = sModel.getCurrAssignment().getAssignmentID();
+                    String classID = sModel.getCurrAssignment().getUserClass().getUniqueID();
+                    sModel.updateAssignment(classID, assignmentID, assignmentName, dueDate, doDate);
+                    sModel.setEditingAssignment(false);
+                } else {
+                    Assignment assignment = new Assignment(assignmentName, dueDate, doDate, (sModel.getUserClassMap()).get(currClassID));
+                    sModel.addAssignment(assignment);
+                }
                 Intent myIntent = new Intent(AddAssignmentActivity.this, ClassDetailsActivity.class);
                 AddAssignmentActivity.this.startActivity(myIntent);
             }
