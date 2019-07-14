@@ -1,0 +1,4 @@
+-Confirmation for if the do date is after the due date
+-Can't create/save/update classes or assignments if not all fields have been filled out
+-If assignment is click in calendar view, it will take you to the AddAssignmentActivity
+-Add functionality to mark assignments as complete which hides them from the calendar and the class details but have "show completed" button on the class details to show the assignments that have been completed
